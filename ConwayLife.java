@@ -1,3 +1,4 @@
+// Plays Conway's Game of Life
 public class ConwayLife {
   public static void playGame(int[][] cells, int generations) {
     // your code goes here
