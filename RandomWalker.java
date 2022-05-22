@@ -347,7 +347,7 @@ public class RandomWalker{
 		} else {
 			System.out.println("Enter a positive number");
 		}
-		// 69 10,000,000 = 0.03103%
+		// 69 10,000,000 = 0.03103% percent win
 
 	}
 }
