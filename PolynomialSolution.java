@@ -34,7 +34,7 @@ public class PolynomialSolution {
     public static long[] ultimateDerivative(long[] numbers) {
         ArrayList<Long> numbers1 = new ArrayList<Long>();
         ArrayList<Long> numbers2 = new ArrayList<Long>();
-        // Number 1 is the actual value, number 2 is how many steps it took
+        // answer[0] is the actual value, answer[1] is how many steps it took
         long[] answer = new long[2];
         for (int i = 0; i < numbers.length; i++) {
             numbers1.add(numbers[i]);
