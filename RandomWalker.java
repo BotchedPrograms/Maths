@@ -33,6 +33,7 @@ public class RandomWalker{
 		}
 
 		// creates array of legal moves and randomly picks one
+			// in highsight, could just use arraylist
 		if (legals == 0) {
 			return "None ";
 		} else {
@@ -111,23 +112,6 @@ public class RandomWalker{
 
 
 	public static void main(String[] args){
-
-	/* Write your code here */
-
-	/* Scanner scan = new Scanner(System.in);
-
-	System.out.println("Type the number of sides:");
-	int sides = scan.nextInt();
-
-	System.out.println("Type a side length:");
-	double length = scan.nextDouble();
-
-	RegularPolygon poly = new RegularPolygon(sides, length);
-	System.out.println(poly);
-	*/
-
-		// movesDraw("Start | (100, 100) \nDown  | (100, 99)\nLeft  | (99, 99)\nUp    | (99, 100)\nLeft  | (98, 100)\nUp    | (98, 101)\nUp    | (98, 102)\nLeft  | (97, 102)\nDown  | (97, 101)\nDown  | (97, 100)\nDown  | (97, 99)\nLeft  | (96, 99)\nDown  | (96, 98)\nDown  | (96, 97)\nDown  | (96, 96)\nRight | (97, 96)\nRight | (98, 96)\nDown  | (98, 95)\nRight | (99, 95)\nUp    | (99, 96)\nRight | (100, 96)\nDown  | (100, 95)\nRight | (101, 95)\nRight | (102, 95)\nDown  | (102, 94)\nLeft  | (101, 94)\nLeft  | (100, 94)\nLeft  | (99, 94)\nDown  | (99, 93)\nLeft  | (98, 93)\nLeft  | (97, 93)\nLeft  | (96, 93)\nUp    | (96, 94)\nRight | (97, 94)\nUp    | (97, 95)\nLeft  | (96, 95)\nLeft  | (95, 95)\nUp    | (95, 96)\nLeft  | (94, 96)\nDown  | (94, 95)\nLeft  | (93, 95)\nUp    | (93, 96)\nLeft  | (92, 96)\nUp    | (92, 97)\nLeft  | (91, 97)\nUp    | (91, 98)\nUp    | (91, 99)", 201);
-
 		Scanner scan = new Scanner(System.in);
 		int half_length;
 		int trials;
@@ -312,7 +296,7 @@ public class RandomWalker{
 			System.out.println("Enter a 5 to watch longest log");
 			System.out.println("Enter a 6 to watch both logs");
 			System.out.println("Enter a 7 to see everything");
-			//System.out.println("Enter anything else to do nothing");
+			// System.out.println("Enter anything else to do nothing");
 
 			int answer;
 			if (args.length >= 3) {
