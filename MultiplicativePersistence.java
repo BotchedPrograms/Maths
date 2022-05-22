@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
 // 2694
-// -> 2*6*9*4 = 432
-// -> 4*3*2 = 24
-// -> 2*4 = 8
-// 3 times
+  // -> 2*6*9*4 = 432
+  // -> 4*3*2 = 24
+  // -> 2*4 = 8
+  // 3 times
 // Not much to write home about here
 public class MultiplicativePersistence {
   public static void multiply(String number, int times) {
