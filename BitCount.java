@@ -77,7 +77,7 @@ public class BitCount {
  +11   +3          +1    +0
  = 64
  
- Sum of 1s from [a, b] = sum of 1s from [1, b] - [1,a]
-   = (1, b) - (1, a) which I might've done here, i can't tell
+ Sum of 1s from [a, b] = sum of 1s from [1, b] - [1,a)
+   = (1, b] - (1, a) which I might've done here, i can't tell
  How all this math translates to the code, I'm not entirely sure
 */
