@@ -1,4 +1,5 @@
 // Plays Conway's Game of Life
+  // Works nicely on command prompt
 public class ConwayLife {
   public static void playGame(int[][] cells, int generations) {
     // your code goes here
@@ -29,8 +30,8 @@ public class ConwayLife {
         }
       }
       try {
-        Thread.sleep(400);
-        printScreen(crop(bigScreen, 5));
+        Thread.sleep(100);
+        printScreen(crop(bigScreen, 3));
       } catch (InterruptedException ex) {
         System.out.println("Something somehow went wrong");
       }
@@ -104,7 +105,6 @@ public class ConwayLife {
   }
 
   public static void main(String[] args) {
-
     // Neat repeating pattern
         /*
         int[][] cells = {
@@ -137,6 +137,6 @@ public class ConwayLife {
       {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
     };
 
-    playGame(cells, 100);
+    playGame(cells, 180);
   }
 }
