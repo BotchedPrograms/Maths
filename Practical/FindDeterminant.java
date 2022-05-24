@@ -1,4 +1,4 @@
-// Finds determinant of square matrix
+// Determines determinant of square matrix
 class FindDeterminant {
   // Worked first try yoooooooooooooooooo; that's like actually unheard of
   public static int determinant(int[][] arr) {
