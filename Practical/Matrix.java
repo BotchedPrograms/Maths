@@ -83,7 +83,8 @@ public class Matrix {
     }
     return newArray;
   }
-
+  
+  // 2d double array instead of 2d int array
   public static double[][] multiply(double[][] arr, int[][] arr2) {
     double[][] newArray = new double[arr.length][arr2[0].length];
     // Classic triple loop
@@ -97,6 +98,7 @@ public class Matrix {
     return newArray;
   }
 
+  // You get the idea
   public static double[][] multiply(int[][] arr, double[][] arr2) {
     return multiply(arr2, arr);
   }
@@ -120,6 +122,7 @@ public class Matrix {
     return answer;
   }
 
+  // Returns the row in 2d array with the most zeros
   public static int rowWithMostZeros(int[][] arr) {
     int rowWithMostZeros = 0;
     int numZeros;
@@ -219,6 +222,7 @@ public class Matrix {
     print(adjugate);
   }
 
+  // Gets solution to set of equations
   public static double[] getSolution(int[][] arr, int[] arr2) {
     int[][] newArray = new int[arr.length][1];
     for (int i = 0; i < arr.length; i++) {
@@ -232,6 +236,7 @@ public class Matrix {
     return solution;
   }
 
+  // Prints solution but better b/c it converts stuff like 3.200000000000000006 to 16/5
   public static void printSolution(int[][] arr, int[] arr2) {
     StringBuilder text = new StringBuilder();
     double[] solution = getSolution(arr, arr2);
@@ -256,6 +261,8 @@ public class Matrix {
     System.out.println(text);
   }
 
+  // Approximates decimal to fraction
+    // Borrowed from other file here but modified to return numbers in fraction instead of just printing them
   public static int[] approximate(double num, double error) {
     int[] fraction = new int[2];
     int n1 = 0;
@@ -285,12 +292,13 @@ public class Matrix {
     return fraction;
   }
 
-  // Prints n b/c I don't want to rewrite my code when changing print(int[][]) or print(int[]) to print(int)
+  // Prints n
+    // Made so I don't have to worry about changing print(int[][]) or print(int[]) to print(int)
   public static void print(int n) {
     System.out.println(n);
   }
 
-  // Prints int[] array
+  // Prints int array
   public static void print(int[] arr) {
     for (int i = 0; i < arr.length; i++) {
       System.out.print(arr[i]);
@@ -298,7 +306,7 @@ public class Matrix {
     }
   }
 
-  // Prints double[] array
+  // Prints double array
   public static void print(double[] arr) {
     for (int i = 0; i < arr.length; i++) {
       System.out.print(arr[i]);
@@ -306,7 +314,7 @@ public class Matrix {
     }
   }
 
-  // Prints int[][] array
+  // Prints 2d int array
   public static void print(int[][] arr) {
     for (int i = 0; i < arr.length; i++) {
       for (int j = 0; j < arr[i].length; j++) {
@@ -316,7 +324,7 @@ public class Matrix {
     }
   }
 
-  // Prints double[][] array
+  // Prints 2d double array
   public static void print(double[][] arr) {
     for (int i = 0; i < arr.length; i++) {
       for (int j = 0; j < arr[i].length; j++) {
