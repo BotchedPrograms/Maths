@@ -11,6 +11,7 @@
     // 5x - 2y -3z = 3
 // It's for linear algebra
   // Might sound like algebra 1 stuff but it's actually college level
+  // Used for working with large databases
 public class Matrix {
   // Adds matrices
   public static int[][] add(int[][] arr, int[][] arr2) {
