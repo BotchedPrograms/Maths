@@ -5,7 +5,7 @@
   // Get determinant of matrix
   // Get transpose and adjugate matrices
   // Get inverse matrix
-  // Solve sets of solutions i.e.
+  // Solve sets of solutions e.g.
     // 3x + 2y - z = 1
     // -2x + 3y + z = -4
     // 5x - 2y -3z = 3
