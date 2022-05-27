@@ -7,7 +7,7 @@ import java.util.ArrayList;
   // 4/7 = 0.571428
   // 5/7 = 0.714285
   // 6/7 = 0.857142
-class Cyclics {
+public class CyclicFractions {
   // Divides a by b in base 10
   public static void divide(int a, int b) {
     divide(a, b, 10);
