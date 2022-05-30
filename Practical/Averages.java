@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-// Gets different kinds of averages:
+// Gets different types of averages:
   // Type of average                                 Application
   // Arithmetic mean                                 Everywhere
   // Geometric mean                                  Finding rate of growth
