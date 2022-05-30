@@ -1,12 +1,15 @@
 import java.util.ArrayList;
 
 // Gets different kinds of averages:
-  // Arithmetic mean
-  // Geometric mean
-  // Weighted mean
-  // Root mean square (RMS)
-  // Harmonic mean
-  // Also median and mode(s) for y'all stat nerds
+  // Type of average                                 Application
+  // Arithmetic mean                                 Everywhere
+  // Geometric mean                                  Finding rate of growth
+  // Weighted mean                                   Grades
+  // Root mean square (RMS)                          Alternating current
+  // Harmonic mean                                   Presumably why Apple uses squircles of shape n = 4
+  // Arithmetic-geometric mean (AGM)                 Hell if I know, I don't even know what I'm talking about
+  // Also median and mode(s), those too              For statistics anal-y-sis
+    // You'll never unsee that last one, and I don't regret a thing
 // Methods repeated to work for int[] and double[]
 public class Averages {
   // (2 + 3 + 5 + 7) / 4 = 4.25
@@ -19,7 +22,7 @@ public class Averages {
   }
 
   public static double arithmeticMean(double[] nums) {
-    long sum = 0;
+    double sum = 0;
     for (double num : nums) {
       sum += num;
     }
@@ -27,7 +30,7 @@ public class Averages {
   }
 
   // (2 * 3 * 5 * 7)^(1/4) = 3.807
-    // Commonly in the form of √(a*b)
+  // Commonly in the form of √(a*b)
   public static double geometricMean(int[] nums) {
     long product = 1;
     for (int num : nums) {
@@ -37,7 +40,7 @@ public class Averages {
   }
 
   public static double geometricMean(double[] nums) {
-    long product = 1;
+    double product = 1;
     for (double num : nums) {
       product *= num;
     }
@@ -57,16 +60,16 @@ public class Averages {
 
   public static double weightedMean(int[] nums, double[] weights) {
     long sumNums = 0;
-    long sumWeights = 0;
+    double sumWeights = 0;
     for (int i = 0; i < nums.length; i++) {
       sumNums += nums[i]*weights[i];
       sumWeights += weights[i];
     }
-    return sumNums/ (double) sumWeights;
+    return sumNums/ sumWeights;
   }
 
   public static double weightedMean(double[] nums, int[] weights) {
-    long sumNums = 0;
+    double sumNums = 0;
     long sumWeights = 0;
     for (int i = 0; i < nums.length; i++) {
       sumNums += nums[i]*weights[i];
@@ -76,13 +79,13 @@ public class Averages {
   }
 
   public static double weightedMean(double[] nums, double[] weights) {
-    long sumNums = 0;
-    long sumWeights = 0;
+    double sumNums = 0;
+    double sumWeights = 0;
     for (int i = 0; i < nums.length; i++) {
       sumNums += nums[i]*weights[i];
       sumWeights += weights[i];
     }
-    return sumNums/ (double) sumWeights;
+    return sumNums/ sumWeights;
   }
 
   //  _____________________________
@@ -100,11 +103,11 @@ public class Averages {
   }
 
   public static double rootMeanSquare(double[] nums) {
-    long sum = 0;
+    double sum = 0;
     for (int i = 0; i < nums.length; i++) {
       sum += nums[i] * nums[i];
     }
-    sum /= (double) nums.length;
+    sum /= nums.length;
     return Math.sqrt(sum);
   }
 
@@ -123,6 +126,37 @@ public class Averages {
       sum += 1/num;
     }
     return nums.length/sum;
+  }
+
+  // Takes arithmetic and geometric means recursively
+    // 2 3 5 7 --> 4.25 and 3.807 --> 4.028 and 4.022 --> 4.025 and 4.025 --> 4.025
+  public static double arithmeticGeometricMean(int[] nums) {
+    return arithmeticGeometricMean(nums, Math.pow(10, -16));
+  }
+
+  public static double arithmeticGeometricMean(double[] nums) {
+    return arithmeticGeometricMean(nums, Math.pow(10, -16));
+  }
+
+  public static double arithmeticGeometricMean(int[] nums, double error) {
+    double geoMean = geometricMean(nums);
+    double arithMean = arithmeticMean(nums);
+    return arithmeticGeometricMean(geoMean, arithMean, error);
+  }
+
+  public static double arithmeticGeometricMean(double[] nums, double error) {
+    double geoMean = geometricMean(nums);
+    double arithMean = arithmeticMean(nums);
+    return arithmeticGeometricMean(geoMean, arithMean, error);
+  }
+
+  public static double arithmeticGeometricMean(double geoMean, double arithMean, double error) {
+    if (Math.abs(geoMean - arithMean) <= error) {
+      return geoMean;
+    }
+    double newGeoMean = Math.sqrt(geoMean * arithMean);
+    double newArithMean = (geoMean + arithMean)/2;
+    return arithmeticGeometricMean(newGeoMean, newArithMean, error);
   }
 
   // 2 3 5 7 --> (3 + 5) / 2.0 = 4.0
@@ -249,12 +283,13 @@ public class Averages {
   public static void main(String[] args) {
     int[] nums = {2, 3, 5, 7};
     int[] weights = {2, 10, 4, 3};
-    System.out.println("Arithmetic mean:  " + arithmeticMean(nums));
-    System.out.println("Geometric mean:   " + geometricMean(nums));
-    System.out.println("Weighted mean:    " + weightedMean(nums, weights));
-    System.out.println("Root mean square: " + rootMeanSquare(nums));
-    System.out.println("Harmonic mean:    " + harmonicMean(nums));
-    System.out.println("Median:           " + median(nums));
-    System.out.println("Mode:             " + mode(nums));
+    System.out.println("Arithmetic mean: " + arithmeticMean(nums));
+    System.out.println("Geometric mean:  " + geometricMean(nums));
+    System.out.println("Weighted mean:   " + weightedMean(nums, weights));
+    System.out.println("RMS:             " + rootMeanSquare(nums));
+    System.out.println("Harmonic mean:   " + harmonicMean(nums));
+    System.out.println("AGM:             " + arithmeticGeometricMean(nums));
+    System.out.println("Median:          " + median(nums));
+    System.out.println("Mode:            " + mode(nums));
   }
 }
