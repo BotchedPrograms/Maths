@@ -26,9 +26,9 @@ public class PrimeFactorization {
     }
         /* Condensed version of
         if (num != 1 || factors.length() == 0) {
-            System.out.println(num);
+          System.out.println(num);
         } else {
-            System.out.println();
+          System.out.println();
         }
          */
     if (num != 1 || factors.size() == 0) {
