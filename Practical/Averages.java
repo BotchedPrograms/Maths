@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class Averages {
   // (2 + 3 + 5 + 7) / 4 = 4.25
   public static double arithmeticMean(int[] nums) {
+    // Sum = sum of all numbers in nums
     long sum = 0;
     for (int num : nums) {
       sum += num;
@@ -29,9 +30,10 @@ public class Averages {
     return sum / (double) nums.length;
   }
 
-  // (2 * 3 * 5 * 7)^(1/4) = 3.807
+  // (2 * 3 * 5 * 7) ^ (1/4) = 3.807
   // Commonly in the form of √(a*b)
   public static double geometricMean(int[] nums) {
+    // Product = product of all numbers in nums
     long product = 1;
     for (int num : nums) {
       product *= num;
@@ -55,7 +57,7 @@ public class Averages {
       sumNums += nums[i]*weights[i];
       sumWeights += weights[i];
     }
-    return sumNums/ (double) sumWeights;
+    return sumNums / (double) sumWeights;
   }
 
   public static double weightedMean(int[] nums, double[] weights) {
@@ -65,7 +67,7 @@ public class Averages {
       sumNums += nums[i]*weights[i];
       sumWeights += weights[i];
     }
-    return sumNums/ sumWeights;
+    return sumNums / sumWeights;
   }
 
   public static double weightedMean(double[] nums, int[] weights) {
@@ -75,7 +77,7 @@ public class Averages {
       sumNums += nums[i]*weights[i];
       sumWeights += weights[i];
     }
-    return sumNums/ (double) sumWeights;
+    return sumNums / (double) sumWeights;
   }
 
   public static double weightedMean(double[] nums, double[] weights) {
@@ -85,7 +87,7 @@ public class Averages {
       sumNums += nums[i]*weights[i];
       sumWeights += weights[i];
     }
-    return sumNums/ sumWeights;
+    return sumNums / sumWeights;
   }
 
   //  _____________________________
@@ -178,31 +180,32 @@ public class Averages {
 
   // 2 3 3 5 7 7 --> 3
   public static int mode(int[] nums) {
-    ArrayList<Integer> times = new ArrayList<Integer>();
+    // Gets unique numbers from nums
     ArrayList<Integer> uniqueNumbers = new ArrayList<Integer>();
+    // Gets times unique number appear in nums
+    ArrayList<Integer> times = new ArrayList<Integer>();
     int index;
     for (int i = 0; i < nums.length; i++) {
       index = uniqueNumbers.indexOf(nums[i]);
+      // If new number, add it to uniqueNumbers and add 0 to times
       if (index == -1) {
         uniqueNumbers.add(nums[i]);
         times.add(0);
+      // Increase times unique number appeared by 1
       } else {
         times.set(index, times.get(index) + 1);
       }
     }
-    int max = 0;
-    for (int i = 0; i < times.size(); i++) {
-      if (times.get(i) > max) {
-        max = times.get(i);
-      }
-    }
+    // Gets max times
+    int max = getMax(times);
+    // Gets first number that appears max times
     index = times.indexOf(max);
     return uniqueNumbers.get(index);
   }
 
   public static double mode(double[] nums) {
-    ArrayList<Integer> times = new ArrayList<Integer>();
     ArrayList<Double> uniqueNumbers = new ArrayList<Double>();
+    ArrayList<Integer> times = new ArrayList<Integer>();
     int index;
     for (int i = 0; i < nums.length; i++) {
       index = uniqueNumbers.indexOf(nums[i]);
@@ -213,20 +216,15 @@ public class Averages {
         times.set(index, times.get(index) + 1);
       }
     }
-    int max = 0;
-    for (int i = 0; i < times.size(); i++) {
-      if (times.get(i) > max) {
-        max = times.get(i);
-      }
-    }
+    int max = getMax(times);
     index = times.indexOf(max);
     return uniqueNumbers.get(index);
   }
 
   // 2 3 3 5 7 7 --> 3, 7
   public static ArrayList<Integer> modes(int[] nums) {
-    ArrayList<Integer> times = new ArrayList<Integer>();
     ArrayList<Integer> uniqueNumbers = new ArrayList<Integer>();
+    ArrayList<Integer> times = new ArrayList<Integer>();
     int index;
     for (int i = 0; i < nums.length; i++) {
       index = uniqueNumbers.indexOf(nums[i]);
@@ -237,12 +235,8 @@ public class Averages {
         times.set(index, times.get(index) + 1);
       }
     }
-    int max = 0;
-    for (int i = 0; i < times.size(); i++) {
-      if (times.get(i) > max) {
-        max = times.get(i);
-      }
-    }
+    int max = getMax(times);
+    // Gets numbers that have appear max times
     ArrayList<Integer> modes = new ArrayList<Integer>();
     for (int i = 0; i < times.size(); i++) {
       if (times.get(i) == max) {
@@ -253,8 +247,8 @@ public class Averages {
   }
 
   public static ArrayList<Double> modes(double[] nums) {
-    ArrayList<Integer> times = new ArrayList<Integer>();
     ArrayList<Double> uniqueNumbers = new ArrayList<Double>();
+    ArrayList<Integer> times = new ArrayList<Integer>();
     int index;
     for (int i = 0; i < nums.length; i++) {
       index = uniqueNumbers.indexOf(nums[i]);
@@ -265,12 +259,7 @@ public class Averages {
         times.set(index, times.get(index) + 1);
       }
     }
-    int max = 0;
-    for (int i = 0; i < times.size(); i++) {
-      if (times.get(i) > max) {
-        max = times.get(i);
-      }
-    }
+    int max = getMax(times);
     ArrayList<Double> modes = new ArrayList<Double>();
     for (int i = 0; i < times.size(); i++) {
       if (times.get(i) == max) {
@@ -278,6 +267,18 @@ public class Averages {
       }
     }
     return modes;
+  }
+
+  // Gets max number in nums
+  // Only made for Integer b/c only here to condense mode code... at least a little bit
+  public static int getMax(ArrayList<Integer> nums) {
+    int max = 0;
+    for (int i = 0; i < nums.size(); i++) {
+      if (nums.get(i) > max) {
+        max = nums.get(i);
+      }
+    }
+    return max;
   }
 
   public static void main(String[] args) {
