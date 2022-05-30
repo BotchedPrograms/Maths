@@ -6,7 +6,7 @@ import java.util.ArrayList;
   // Geometric mean                                  Finding rate of growth
   // Weighted mean                                   Grades
   // Root mean square (RMS)                          Alternating current
-  // Harmonic mean                                   Presumably why Apple uses squircles of shape n = 4
+  // Harmonic mean                                   Presumably why Apple uses squircles w/ n = 4
   // Arithmetic-geometric mean (AGM)                 Hell if I know, I don't even know what I'm talking about
   // Also median and mode(s), those too              For statistics anal-y-sis
     // You'll never unsee that last one, and I don't regret a thing
