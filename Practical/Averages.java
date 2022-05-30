@@ -27,7 +27,7 @@ public class Averages {
     for (double num : nums) {
       sum += num;
     }
-    return sum / (double) nums.length;
+    return sum / nums.length;
   }
 
   // (2 * 3 * 5 * 7) ^ (1/4) = 3.807
