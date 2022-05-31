@@ -81,10 +81,11 @@ public class PolynomialSolution {
 
   // Gets factorial of a number
   public static long factorial(int n) {
-    if (n == 0) {
-      return 1;
+    long fac = 1;
+    for (long i = n; i > 1; i--) {
+      fac *= i;
     }
-    return n*factorial(n - 1);
+    return fac;
   }
 
   // Gets coefficients of polynomial
