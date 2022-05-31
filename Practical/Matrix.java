@@ -91,7 +91,6 @@ public class Matrix {
       return null;
     }
     double[][] newArray = new double[arr.length][arr2[0].length];
-    // Classic triple loop
     for (int i = 0; i < newArray.length; i++) {
       for (int j = 0; j < newArray[0].length; j++) {
         for (int k = 0; k < arr2.length; k++) {
@@ -108,7 +107,6 @@ public class Matrix {
       return null;
     }
     double[][] newArray = new double[arr.length][arr2[0].length];
-    // Classic triple loop
     for (int i = 0; i < newArray.length; i++) {
       for (int j = 0; j < newArray[0].length; j++) {
         for (int k = 0; k < arr2.length; k++) {
@@ -124,7 +122,6 @@ public class Matrix {
       return null;
     }
     double[][] newArray = new double[arr.length][arr2[0].length];
-    // Classic triple loop
     for (int i = 0; i < newArray.length; i++) {
       for (int j = 0; j < newArray[0].length; j++) {
         for (int k = 0; k < arr2.length; k++) {
