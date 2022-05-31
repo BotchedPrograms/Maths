@@ -8,8 +8,7 @@ import java.util.ArrayList;
 public class PolynomialSolution {
   // Gets the greatest common factor for two numbers
   public static long gcf(long a, long b) {
-    // Math.min better but troublesome for 0 and negative numbers
-    for (long i = Math.max(a,b); i > 0; i--) {
+    for (long i = Math.min(Math.abs(a), Math.abs(b)); i > 0; i--) {
       if (a % i == 0 && b % i == 0) {
         return i;
       }
