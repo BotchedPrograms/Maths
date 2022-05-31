@@ -18,7 +18,7 @@ public class PolynomialSolution {
 
   // Gets the greatest common factor for an array
   public static long gcf(long[] numbers) {
-    l1: for (long i = maxAbs(numbers); i > 0; i--) {
+    l1: for (long i = minAbs(numbers); i > 0; i--) {
       for (int j = 0; j < numbers.length; j++) {
         if (numbers[j] % i != 0) {
           continue l1;
@@ -190,15 +190,15 @@ public class PolynomialSolution {
     return indices;
   }
 
-  // Gets max of absolute value of numbers
-  public static long maxAbs(long[] numbers) {
-    long maxAbs = Math.abs(numbers[0]);
+  // Gets min of absolute value of numbers
+  public static long minAbs(long[] numbers) {
+    long minAbs = Math.abs(numbers[0]);
     for (int i = 1; i < numbers.length; i++) {
-      if (Math.abs(numbers[i]) > maxAbs) {
-        maxAbs = Math.abs(numbers[i]);
+      if (Math.abs(numbers[i]) < minAbs) {
+        minAbs = Math.abs(numbers[i]);
       }
     }
-    return maxAbs;
+    return minAbs;
   }
 
   // Prints numbers in array
