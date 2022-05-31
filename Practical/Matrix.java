@@ -2,6 +2,7 @@
   // Add and subtract matrices
   // Multiply and divide matrix by number
   // Multiply matrices
+  // "Divides" matrices
   // Get determinant of matrix
   // Get transpose and adjugate matrices
   // Get inverse matrix
@@ -26,7 +27,7 @@ public class Matrix {
 
   // Subtracts matrices
   public static int[][] subtract(int[][] arr, int[][] arr2) {
-   int[][] newArray = new int[arr.length][arr[0].length];
+    int[][] newArray = new int[arr.length][arr[0].length];
     for (int i = 0; i < arr.length; i++) {
       for (int j = 0; j < arr[0].length; j++) {
         newArray[i][j] = arr[i][j] - arr2[i][j];
@@ -67,34 +68,34 @@ public class Matrix {
     return multiply(arr, n);
   }
 
-  // Divides matrix by n
-  public static double[][] divide(int[][] arr, double n) {
-    double oneOverN = 1/n;
-    return multiply(arr, oneOverN);
-  }
-
   // Multiples matrix by matrix
   public static int[][] multiply(int[][] arr, int[][] arr2) {
+    if (arr == null || arr2 == null) {
+      return null;
+    }
     int[][] newArray = new int[arr.length][arr2[0].length];
     // Classic triple loop
     for (int i = 0; i < newArray.length; i++) {
       for (int j = 0; j < newArray[0].length; j++) {
         for (int k = 0; k < arr2.length; k++) {
-          newArray[i][j] += arr[i][k]*arr2[k][j]; 
+          newArray[i][j] += arr[i][k]*arr2[k][j];
         }
       }
     }
     return newArray;
   }
-  
+
   // 2d double array instead of 2d int array
   public static double[][] multiply(double[][] arr, int[][] arr2) {
+    if (arr == null || arr2 == null) {
+      return null;
+    }
     double[][] newArray = new double[arr.length][arr2[0].length];
     // Classic triple loop
     for (int i = 0; i < newArray.length; i++) {
       for (int j = 0; j < newArray[0].length; j++) {
         for (int k = 0; k < arr2.length; k++) {
-          newArray[i][j] += arr[i][k]*arr2[k][j]; 
+          newArray[i][j] += arr[i][k]*arr2[k][j];
         }
       }
     }
@@ -103,7 +104,147 @@ public class Matrix {
 
   // You get the idea
   public static double[][] multiply(int[][] arr, double[][] arr2) {
-    return multiply(arr2, arr);
+    if (arr == null || arr2 == null) {
+      return null;
+    }
+    double[][] newArray = new double[arr.length][arr2[0].length];
+    // Classic triple loop
+    for (int i = 0; i < newArray.length; i++) {
+      for (int j = 0; j < newArray[0].length; j++) {
+        for (int k = 0; k < arr2.length; k++) {
+          newArray[i][j] += arr[i][k]*arr2[k][j];
+        }
+      }
+    }
+    return newArray;
+  }
+
+  public static double[][] multiply(double[][] arr, double[][] arr2) {
+    if (arr == null || arr2 == null) {
+      return null;
+    }
+    double[][] newArray = new double[arr.length][arr2[0].length];
+    // Classic triple loop
+    for (int i = 0; i < newArray.length; i++) {
+      for (int j = 0; j < newArray[0].length; j++) {
+        for (int k = 0; k < arr2.length; k++) {
+          newArray[i][j] += arr[i][k]*arr2[k][j];
+        }
+      }
+    }
+    return newArray;
+  }
+
+  // Divides matrix by n
+  public static double[][] divide(int[][] arr, double n) {
+    double oneOverN = 1/n;
+    return multiply(arr, oneOverN);
+  }
+
+  public static double[][] divideLeft(int[][] arr, int[][] arr2) {
+    double[][] inverse = getInverse(arr);
+    return multiply(inverse, arr2);
+  }
+
+  public static double[][] divideRight(int[][] arr, int[][] arr2) {
+    double[][] inverse = getInverse(arr);
+    return multiply(arr2, inverse);
+  }
+
+  public static void printDivideLeft(int[][] arr, int[][] arr2) {
+    int determinant = getDeterminant(arr);
+    if (determinant == 0) {
+      System.out.println("none");
+      return;
+    }
+    int[][] adjugate = getAdjugate(arr);
+    int[][] main = multiply(adjugate, arr2);
+    printDivide(main, determinant);
+  }
+
+  public static void printDivideRight(int[][] arr, int[][] arr2) {
+    int determinant = getDeterminant(arr);
+    if (determinant == 0) {
+      System.out.println("none");
+      return;
+    }
+    int[][] adjugate = getAdjugate(arr);
+    int[][] main = multiply(arr2, adjugate);
+    printDivide(main, determinant);
+  }
+
+  public static void printDivide(int[][] main, int determinant) {
+    int gcf = gcf(main);
+    gcf = gcf(determinant, gcf);
+    int num = 1;
+    if (gcf > 1) {
+      num *= gcf;
+      for (int i = 0; i < main.length; i++) {
+        for (int j = 0; j < main[0].length; j++) {
+          main[i][j] /= gcf;
+        }
+      }
+      int[] fraction = simplify(num, determinant);
+      num = fraction[0];
+      determinant = fraction[1];
+    }
+    if (determinant < 0) {
+      num *= -1;
+      determinant *= -1;
+    }
+    System.out.println(num + "/" + determinant + " * ");
+    print(main);
+  }
+
+  public static int gcf(int a, int b) {
+    for (int i = Math.min(Math.abs(a), Math.abs(b)); i > 0; i--) {
+      if (a % i == 0 && b % i == 0) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  public static int gcf(int[] nums) {
+    l1: for (int i = minAbs(nums); i > 0; i--) {
+      for (int j = 0; j < nums.length; j++) {
+        if (nums[j] % i != 0) {
+          continue l1;
+        }
+      }
+      return i;
+    }
+    return -1;
+  }
+
+  public static int gcf(int[][] arr) {
+    int[] nums = new int[arr.length*arr[0].length];
+    for (int i = 0; i < arr.length; i++) {
+      for (int j = 0; j < arr[0].length; j++) {
+        nums[i*arr.length+j] = arr[i][j];
+      }
+    }
+    return gcf(nums);
+  }
+
+  // Gets min of absolute value of numbers
+  public static int minAbs(int[] numbers) {
+    int minAbs = Math.abs(numbers[0]);
+    for (int i = 1; i < numbers.length; i++) {
+      if (Math.abs(numbers[i]) < minAbs) {
+        minAbs = Math.abs(numbers[i]);
+      }
+    }
+    return minAbs;
+  }
+
+  public static int[] simplify(int num, int den) {
+    int gcf = gcf(num, den);
+    if (gcf > 1) {
+      num /= gcf;
+      den /= gcf;
+    }
+    return new int[] {num, den};
   }
 
   // Gets determinant of square matrix
@@ -118,7 +259,7 @@ public class Matrix {
       // If arr[i][j] == 0, answer is just += 0 and we needn't waste time calculating everything else
       if (arr[i][j] != 0) {
         // Explanation for (i+j)%2*(-2)+1:
-          // Imagine a chess board where top left and same-colored tiles stay the same and others multiplied by -1
+        // Imagine a chess board where top left and same-colored tiles stay the same and others multiplied by -1
         answer += arr[i][j]*((i+j)%2*(-2)+1)*getDeterminant(newArray(arr, i, j));
       }
     }
@@ -150,14 +291,14 @@ public class Matrix {
     int[][] newArr = new int[arr.length-1][arr.length-1];
     int iUsed;
     int jUsed;
-    l1: for (int i = 0; i < arr.length; i++) {
+    for (int i = 0; i < arr.length; i++) {
       iUsed = i;
       if (i > x) {
         iUsed--;
       } else if (i == x) {
-        continue l1;
+        continue;
       }
-      for (int j = 0; j < arr.length; j++) {
+      for (int j = 0; j < arr[0].length; j++) {
         jUsed = j;
         if (j > y) {
           jUsed--;
@@ -173,18 +314,18 @@ public class Matrix {
 
   // Returns unit matrix of order n
   public static int[][] unitMatrix(int n) {
-    int[][] newArray = new int[n][n];
+    int[][] unitMatrix = new int[n][n];
     for (int i = 0; i < n; i++) {
-      newArray[i][i] = 1;
+      unitMatrix[i][i] = 1;
     }
-    return newArray;
+    return unitMatrix;
   }
 
   // Gets transpose matrix
   public static int[][] getTranspose(int[][] arr) {
     int[][] transpose = new int[arr.length][arr.length];
     for (int i = 0; i < arr.length; i++) {
-      for (int j = 0; j < arr.length; j++) {
+      for (int j = 0; j < arr[0].length; j++) {
         transpose[i][j] = arr[j][i];
       }
     }
@@ -196,7 +337,7 @@ public class Matrix {
     int[][] transpose = getTranspose(arr);
     int[][] adjugate = new int[arr.length][arr.length];
     for (int i = 0; i < arr.length; i++) {
-      for (int j = 0; j < arr.length; j++) {
+      for (int j = 0; j < arr[0].length; j++) {
         adjugate[i][j] = ((i+j)%2*(-2)+1) * getDeterminant(newArray(transpose, i, j));
       }
     }
@@ -221,7 +362,12 @@ public class Matrix {
       System.out.print("none");
       return;
     }
-    System.out.println("1/" + determinant + " * ");
+    int num = 1;
+    if (determinant < 0) {
+      num *= -1;
+      determinant *= -1;
+    }
+    System.out.println(num + "/" + determinant + " * ");
     print(adjugate);
   }
 
@@ -232,6 +378,9 @@ public class Matrix {
       newArray[i][0] = arr2[i];
     }
     double[][] product = multiply(getInverse(arr), newArray);
+    if (product == null) {
+      return null;
+    }
     double[] solution = new double[product.length];
     for (int i = 0; i < product.length; i++) {
       solution[i] = product[i][0];
@@ -265,7 +414,7 @@ public class Matrix {
   }
 
   // Approximates decimal to fraction
-    // Borrowed from other file here but modified to return numbers in fraction instead of just printing them
+  // Borrowed from other file here but modified to return numbers in fraction instead of just printing them
   public static int[] approximate(double num, double error) {
     int[] fraction = new int[2];
     int n1 = 0;
@@ -296,7 +445,7 @@ public class Matrix {
   }
 
   // Prints n
-    // Made so I don't have to worry about changing print(int[][]) or print(int[]) to print(int)
+  // Made so I don't have to worry about changing print(int[][]) or print(int[]) to print(int)
   public static void print(int n) {
     System.out.println(n);
   }
@@ -319,9 +468,19 @@ public class Matrix {
 
   // Prints 2d int array
   public static void print(int[][] arr) {
+    int max = 0;
+    int length;
     for (int i = 0; i < arr.length; i++) {
       for (int j = 0; j < arr[i].length; j++) {
-        System.out.print(arr[i][j] + " ");
+        length = String.valueOf(arr[i][j]).length();
+        if (length > max) {
+          max = length;
+        }
+      }
+    }
+    for (int i = 0; i < arr.length; i++) {
+      for (int j = 0; j < arr[i].length; j++) {
+        System.out.printf("%" + (max+1) + "d", arr[i][j]);
       }
       System.out.println();
     }
@@ -329,30 +488,40 @@ public class Matrix {
 
   // Prints 2d double array
   public static void print(double[][] arr) {
+    int max = 0;
+    int length;
     for (int i = 0; i < arr.length; i++) {
       for (int j = 0; j < arr[i].length; j++) {
-        System.out.print(arr[i][j] + " ");
+        length = String.valueOf(arr[i][j]).length();
+        if (length > max) {
+          max = length;
+        }
+      }
+    }
+    for (int i = 0; i < arr.length; i++) {
+      for (int j = 0; j < arr[i].length; j++) {
+        System.out.printf("%" + (max+1) + "d", arr[i][j]);
       }
       System.out.println();
     }
   }
-  
+
   public static void main(String[] args) {
     int[][] threeByThree = {
-      {3, 2, -1},
-      {-2, 3, 1},
-      {5, -2, -3}
+        {3, 2, -1},
+        {-2, 3, 1},
+        {5, -2, -3}
     };
     int[][] twoByTwo = {
-      {3, 7},
-      {5, -8}
+        {3, 7},
+        {5, -8}
     };
     int[][] inputs = {
-      {3, 2, -1},
-      {-2, 3, 1},
-      {5, -2, -3}
+        {3, 1, 2},
+        {-1, -2, -1},
+        {2, 1, 3}
     };
     int[] outputs = {1, -4, 3};
-    printSolution(inputs, outputs);
+    printDivideLeft(threeByThree, inputs);
   }
 }
