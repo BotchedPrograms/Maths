@@ -189,7 +189,7 @@ public class Averages {
     }
     for (int i = 0; i < newNums.length-1; i++) {
       for (int j = i + 1; j < newNums.length; j++) {
-        if (newNums[i] < newNums[j]) {
+        if (newNums[i] > newNums[j]) {
           temp = newNums[i];
           newNums[i] = newNums[j];
           newNums[j] = temp;
@@ -207,7 +207,7 @@ public class Averages {
     }
     for (int i = 0; i < newNums.length-1; i++) {
       for (int j = i + 1; j < newNums.length; j++) {
-        if (newNums[i] < newNums[j]) {
+        if (newNums[i] > newNums[j]) {
           temp = newNums[i];
           newNums[i] = newNums[j];
           newNums[j] = temp;
