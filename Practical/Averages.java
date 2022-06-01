@@ -163,19 +163,58 @@ public class Averages {
 
   // 2 3 5 7 --> (3 + 5) / 2.0 = 4.0
   public static double median(int[] nums) {
-    if (nums.length % 2 == 1) {
-      return nums[nums.length/2];
+    int[] sortedNums = sort(nums);
+    if (sortedNums.length % 2 == 1) {
+      return sortedNums[sortedNums.length/2];
     } else {
-      return (nums[nums.length/2-1] + nums[nums.length/2])/2.0;
+      return (sortedNums[sortedNums.length/2-1] + sortedNums[sortedNums.length/2])/2.0;
     }
   }
 
   public static double median(double[] nums) {
-    if (nums.length % 2 == 1) {
-      return nums[nums.length/2];
+    double[] sortedNums = sort(nums);
+    if (sortedNums.length % 2 == 1) {
+      return sortedNums[sortedNums.length/2];
     } else {
-      return (nums[nums.length/2-1] + nums[nums.length/2])/2;
+      return (sortedNums[sortedNums.length/2-1] + sortedNums[sortedNums.length/2])/2;
     }
+  }
+
+  // Sorts numbers in array
+  public static int[] sort(int[] nums) {
+    int temp;
+    int[] newNums = new int[nums.length];
+    for (int i = 0; i < nums.length; i++) {
+      newNums[i] = nums[i];
+    }
+    for (int i = 0; i < newNums.length-1; i++) {
+      for (int j = i + 1; j < newNums.length; j++) {
+        if (newNums[i] < newNums[j]) {
+          temp = newNums[i];
+          newNums[i] = newNums[j];
+          newNums[j] = temp;
+        }
+      }
+    }
+    return newNums;
+  }
+
+  public static double[] sort(double[] nums) {
+    double temp;
+    double[] newNums = new double[nums.length];
+    for (int i = 0; i < nums.length; i++) {
+      newNums[i] = nums[i];
+    }
+    for (int i = 0; i < newNums.length-1; i++) {
+      for (int j = i + 1; j < newNums.length; j++) {
+        if (newNums[i] < newNums[j]) {
+          temp = newNums[i];
+          newNums[i] = newNums[j];
+          newNums[j] = temp;
+        }
+      }
+    }
+    return newNums;
   }
 
   // 2 3 3 5 7 7 --> 3
