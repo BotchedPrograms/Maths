@@ -495,7 +495,7 @@ public class Matrix {
     }
     for (int i = 0; i < arr.length; i++) {
       for (int j = 0; j < arr[i].length; j++) {
-        System.out.printf("%" + (max+1) + "d", arr[i][j]);
+        System.out.printf("%" + max + "d ", arr[i][j]);
       }
       System.out.println();
     }
@@ -515,7 +515,7 @@ public class Matrix {
     }
     for (int i = 0; i < arr.length; i++) {
       for (int j = 0; j < arr[i].length; j++) {
-        System.out.printf("%" + (max+1) + "d", arr[i][j]);
+        System.out.printf("%" + max + "d ", arr[i][j]);
       }
       System.out.println();
     }
