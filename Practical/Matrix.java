@@ -91,6 +91,7 @@ public class Matrix {
       return null;
     }
     double[][] newArray = new double[arr.length][arr2[0].length];
+    // Classic triple loop
     for (int i = 0; i < newArray.length; i++) {
       for (int j = 0; j < newArray[0].length; j++) {
         for (int k = 0; k < arr2.length; k++) {
@@ -107,6 +108,7 @@ public class Matrix {
       return null;
     }
     double[][] newArray = new double[arr.length][arr2[0].length];
+    // Classic triple loop
     for (int i = 0; i < newArray.length; i++) {
       for (int j = 0; j < newArray[0].length; j++) {
         for (int k = 0; k < arr2.length; k++) {
@@ -122,6 +124,7 @@ public class Matrix {
       return null;
     }
     double[][] newArray = new double[arr.length][arr2[0].length];
+    // Classic triple loop
     for (int i = 0; i < newArray.length; i++) {
       for (int j = 0; j < newArray[0].length; j++) {
         for (int k = 0; k < arr2.length; k++) {
@@ -138,16 +141,25 @@ public class Matrix {
     return multiply(arr, oneOverN);
   }
 
+  // Divides arr by arr2 from the left
+    // "I thought you can't divide matrices"   Well you can... kind of
+    // AX = B
+      // If A has an inverse, X = A^-1 x B
+      // Let's say that X = B\A (divide by A from the left)
+      // Thus, B\A = A^-1 x B
   public static double[][] divideLeft(int[][] arr, int[][] arr2) {
     double[][] inverse = getInverse(arr);
     return multiply(inverse, arr2);
   }
 
+  // Divides arr by arr2 from the right
+    // B/A = B x A^-1
   public static double[][] divideRight(int[][] arr, int[][] arr2) {
     double[][] inverse = getInverse(arr);
     return multiply(arr2, inverse);
   }
 
+  // Prints divideLeft if you don't like all the doubles
   public static void printDivideLeft(int[][] arr, int[][] arr2) {
     int determinant = getDeterminant(arr);
     if (determinant == 0) {
@@ -159,6 +171,7 @@ public class Matrix {
     printDivide(main, determinant);
   }
 
+  // Prints divideRight
   public static void printDivideRight(int[][] arr, int[][] arr2) {
     int determinant = getDeterminant(arr);
     if (determinant == 0) {
@@ -169,7 +182,8 @@ public class Matrix {
     int[][] main = multiply(arr2, adjugate);
     printDivide(main, determinant);
   }
-
+  
+  // Does the actual printing, set up by printDivideLeft and Right
   public static void printDivide(int[][] main, int determinant) {
     int gcf = gcf(main);
     gcf = gcf(determinant, gcf);
@@ -193,6 +207,7 @@ public class Matrix {
     print(main);
   }
 
+  // Gets gcf of 2 numbers
   public static int gcf(int a, int b) {
     for (int i = Math.min(Math.abs(a), Math.abs(b)); i > 0; i--) {
       if (a % i == 0 && b % i == 0) {
@@ -202,6 +217,7 @@ public class Matrix {
     return -1;
   }
 
+  // Gets gcf of numbers in int[]
   public static int gcf(int[] nums) {
     l1: for (int i = minAbs(nums); i > 0; i--) {
       for (int j = 0; j < nums.length; j++) {
@@ -214,6 +230,7 @@ public class Matrix {
     return -1;
   }
 
+  // Turns int[][] to int[] and gets gcf of it
   public static int gcf(int[][] arr) {
     int[] nums = new int[arr.length*arr[0].length];
     for (int i = 0; i < arr.length; i++) {
@@ -235,6 +252,7 @@ public class Matrix {
     return minAbs;
   }
 
+  // Simplifies fraction
   public static int[] simplify(int num, int den) {
     int gcf = gcf(num, den);
     if (gcf > 1) {
