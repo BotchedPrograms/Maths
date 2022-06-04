@@ -9,7 +9,7 @@
   // Solve sets of solutions e.g.
     // 3x + 2y - z = 1
     // -2x + 3y + z = -4
-    // 5x - 2y -3z = 3
+    // 5x - 2y - 3z = 3
 // It's for linear algebra
   // Might sound like algebra 1 stuff but it's actually college level
   // Used for working with large databases
