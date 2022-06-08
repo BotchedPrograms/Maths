@@ -1,3 +1,6 @@
+// Fraction but static methods
+  // Could just combine them but that's gross
+
 // Adds, subtracts, multiplies, and divides fractions; standard stuff
   // Methods repeated 2-3 times to work for Strings, int[]s, and/or ints
     // String fractions represented like "2/3", "5/6", etc.
