@@ -1,3 +1,5 @@
+// FractionMaths but relatively clean class
+
 // Adds, subtracts, multiplies, and divides fractions; standard stuff
 public class Fraction {
   private int num;    // Numerator
