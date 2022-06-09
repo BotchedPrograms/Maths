@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// Gets prime factorization of number
+  // 12 = 2 2 3 b/c 2 x 2 x 3 = 12
+// Program notably returns 1 if input is 1
 public class PrimeFactorization {
   public static ArrayList<Long> factor(long num) {
     return factor(num, new ArrayList<Long>(), 3, new ArrayList<Long>());
@@ -26,13 +29,13 @@ public class PrimeFactorization {
         return factor(num/i, smallPrimes, i, factors);
       }
     }
-        /* Condensed version of
-        if (num != 1 || factors.length() == 0) {
-          System.out.println(num);
-        } else {
-          System.out.println();
-        }
-         */
+    /* Condensed version of
+    if (num != 1 || factors.length() == 0) {
+      System.out.println(num);
+    } else {
+      System.out.println();
+    }
+     */
     if (num != 1 || factors.size() == 0) {
       factors.add(num);
     }
