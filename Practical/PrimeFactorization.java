@@ -2,11 +2,14 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PrimeFactorization {
+  public static ArrayList<Long> factor(long num) {
+    return factor(num, new ArrayList<Long>(), 3, new ArrayList<Long>());
+  }
+  
   public static ArrayList<Long> factor(long num, ArrayList<Long> smallPrimes, int i, ArrayList<Long> factors) {
     if (num % 2 == 0) {
       factors.add(2L);
-      factor(num/2, smallPrimes, i, factors);
-      return factors;
+      return factor(num/2, smallPrimes, i, factors);
     }
     int sqrt = (int) Math.sqrt(num);
     l1: for (; i <= sqrt; i += 2) {
@@ -20,8 +23,7 @@ public class PrimeFactorization {
       smallPrimes.add((long) i);
       if (num % i == 0) {
         factors.add((long) i);
-        factor(num/i, smallPrimes, i, factors);
-        return factors;
+        return factor(num/i, smallPrimes, i, factors);
       }
     }
         /* Condensed version of
