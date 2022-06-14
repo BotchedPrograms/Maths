@@ -1,6 +1,6 @@
 // Approximates fraction from decimal using the Farey sequence
 public class FractionApproximation {
-  public static void approximate(double num, double error) {
+  public static int[] approximate(double num, double error) {
     int n1 = 0;
     int d1 = 1;
     int n2 = 1;
@@ -23,10 +23,11 @@ public class FractionApproximation {
       }
     }
     // Adds int part of num back into newly acquired fraction
-    System.out.println(((int) num * (denominator) + numerator) + "/" + denominator);
+    return new int[] {(int) num * denominator + numerator, denominator};
   }
 
   public static void main(String[] args) {
-    approximate(28.074433, 0.00001);
+    int[] fraction = approximate(28.074433, 0.00001);
+    System.out.println(fraction[0] + "/" + fraction[1]);
   }
 }
