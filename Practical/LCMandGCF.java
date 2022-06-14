@@ -4,16 +4,16 @@ import java.util.ArrayList;
   // Not too hard to recreate but again, it's more trouble than it's worth
 public class LCMandGCF {
   // Gets lcm of 2 numbers
-  public static int lcm(int a, int b) {
+  public static long lcm(long a, long b) {
     return Math.abs(a*b/gcf(a, b));
   }
 
   // Gets lcm of numbers in int[]
-  public static int lcm(int[] nums) {
+  public static long lcm(long[] nums) {
     if (nums.length == 0) {
       return -1;
     }
-    int lcm = Math.abs(nums[0]);
+    long lcm = Math.abs(nums[0]);
     for (int i = 0; i < nums.length - 1; i++) {
       lcm = lcm(lcm, nums[i+1]);
     }
@@ -22,11 +22,11 @@ public class LCMandGCF {
 
   // Gets gcf of 2 numbers
     // Gets prime factors and returns the product of the ones they have in common
-  public static int gcf(int a, int b) {
+  public static long gcf(long a, long b) {
     ArrayList<Long> factorsA = factor(a);
     ArrayList<Long> factorsB = factor(b);
     ArrayList<Long> inCommon = inCommon(factorsA, factorsB);
-    int product = 1;
+    long product = 1;
     for (int i = 0; i < inCommon.size(); i++) {
       product *= inCommon.get(i);
     }
@@ -34,27 +34,21 @@ public class LCMandGCF {
   }
 
   // Gets gcf of numbers in int[]
-  public static int gcf(int[] nums) {
-    l1: for (int i = minAbs(nums); i > 0; i--) {
-      for (int j = 0; j < nums.length; j++) {
-        if (nums[j] % i != 0) {
-          continue l1;
-        }
-      }
-      return i;
+  public static long gcf(long[] nums) {
+    if (nums.length == 0) {
+      return -1;
     }
-    return -1;
-  }
-
-  // Gets min of absolute value of numbers
-  public static int minAbs(int[] nums) {
-    int minAbs = Math.abs(nums[0]);
+    if (nums.length == 1) {
+      return nums[0];
+    }
+    long gcf = gcf(nums[0], nums[1]);
     for (int i = 1; i < nums.length; i++) {
-      if (Math.abs(nums[i]) < minAbs) {
-        minAbs = Math.abs(nums[i]);
+      if (gcf == 1) {
+        break;
       }
+      gcf = gcf(gcf, nums[i]);
     }
-    return minAbs;
+    return gcf;
   }
 
   public static ArrayList<Long> factor(long num) {
@@ -105,7 +99,7 @@ public class LCMandGCF {
   }
 
   public static void main(String[] args) {
-    int[] nums = {-44, 52, 40, 20, -16, -16, 48, 60, 48};
+    long[] nums = {-44, 52, 40, 20, -16, -16, 48, 60, 48};
     System.out.println(lcm(nums));
     System.out.println(gcf(nums));
     System.out.println(gcf(79548996, 11382516));
