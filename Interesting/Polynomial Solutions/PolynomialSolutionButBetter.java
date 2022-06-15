@@ -9,11 +9,10 @@ import java.util.ArrayList;
     x = 2:  a + 2b + 4c = 7
     x = 3:  a + 3b + 9c = 11
     x = 5:  a + 5b + 25c = 13
-  This is equal to the matrix
+  This is a system of equations, which we can solve by finding the inverse matrix of the left matrix and multiplying it by the right one
     [ 1  2  4  | 7  ]
     [ 1  3  9  | 11 ]
     [ 1  5  25 | 13 ]
-  This is a system of equations which we can solve by finding the inverse matrix of the left part and multiplying it by the right
  */
 public class PolynomialSolutionButBetter {
   // Multiples matrix by matrix
