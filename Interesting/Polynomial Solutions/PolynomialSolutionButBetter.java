@@ -49,7 +49,7 @@ public class PolynomialSolutionButBetter {
       // If arr[i][j] == 0, answer is just += 0 and we needn't waste time calculating everything else
       if (arr[i][j] != 0) {
         // Explanation for (i+j)%2*(-2)+1:
-        // Imagine a chess board where top left and same-colored tiles stay the same and others multiplied by -1
+          // Imagine a chess board where top left and same-colored tiles stay the same and others multiplied by -1
         answer += arr[i][j]*((i+j)%2*(-2)+1)*getDeterminant(newArray(arr, i, j));
       }
     }
@@ -61,13 +61,9 @@ public class PolynomialSolutionButBetter {
       return arr[0][0];
     }
     double answer = 0;
-    // Not necessary, i could be 0 for all we care, it just makes program more efficient b/c more 0s equals less work as explained right below
     int i = rowWithMostZeros(arr);
     for (int j = 0; j < arr.length; j++) {
-      // If arr[i][j] == 0, answer is just += 0 and we needn't waste time calculating everything else
       if (arr[i][j] != 0) {
-        // Explanation for (i+j)%2*(-2)+1:
-        // Imagine a chess board where top left and same-colored tiles stay the same and others multiplied by -1
         answer += arr[i][j]*((i+j)%2*(-2)+1)*getDeterminant(newArray(arr, i, j));
       }
     }
@@ -155,7 +151,6 @@ public class PolynomialSolutionButBetter {
         if (j > y) {
           jUsed--;
         }
-        // if statement needed for reasons unknown
         if (j != y) {
           newArr[iUsed][jUsed] = arr[i][j];
         }
@@ -378,8 +373,8 @@ public class PolynomialSolutionButBetter {
     double newNum = 0;
     double decimalPart = num - (long) num;
     while (Math.abs(newNum - decimalPart) > error) {
-      numerator = n1+n2;
-      denominator = d1+d2;
+      numerator = n1 + n2;
+      denominator = d1 + d2;
       newNum = (double) numerator/denominator;
       if (newNum < decimalPart) {
         n1 += n2;
@@ -422,7 +417,7 @@ public class PolynomialSolutionButBetter {
 
   // Avoids 3x^2 + 5x + 0 becoming 3x^2 + 5x +
   public static ArrayList<Integer> nonZeroIndices(long[] numbers) {
-    ArrayList<Integer> indices = new ArrayList<Integer>();
+    ArrayList<Integer> indices = new ArrayList<>();
     for (int i = 0; i < numbers.length; i++) {
       if (numbers[i] != 0) {
         indices.add(i);
@@ -432,7 +427,7 @@ public class PolynomialSolutionButBetter {
   }
 
   public static ArrayList<Integer> nonZeroIndices(double[] numbers) {
-    ArrayList<Integer> indices = new ArrayList<Integer>();
+    ArrayList<Integer> indices = new ArrayList<>();
     for (int i = 0; i < numbers.length; i++) {
       if (numbers[i] != 0) {
         indices.add(i);
@@ -446,8 +441,8 @@ public class PolynomialSolutionButBetter {
     ArrayList<Long> factorsB = factor(b);
     ArrayList<Long> inCommon = inCommon(factorsA, factorsB);
     long product = 1;
-    for (int i = 0; i < inCommon.size(); i++) {
-      product *= inCommon.get(i);
+    for (Long aLong : inCommon) {
+      product *= aLong;
     }
     return product;
   }
@@ -471,13 +466,13 @@ public class PolynomialSolutionButBetter {
   }
 
   public static ArrayList<Long> factor(long num) {
-    return factor(num, new ArrayList<Long>(), 3, new ArrayList<Long>());
+    return factor(num, new ArrayList<>(), 3, new ArrayList<>());
   }
 
   public static ArrayList<Long> factor(long num, ArrayList<Long> smallPrimes, int i, ArrayList<Long> factors) {
     if (num % 2 == 0) {
       if (num == 0) {
-        return new ArrayList<Long>();
+        return new ArrayList<>();
       }
       factors.add(2L);
       factor(num/2, smallPrimes, i, factors);
@@ -485,10 +480,10 @@ public class PolynomialSolutionButBetter {
     }
     int sqrt = (int) Math.sqrt(num);
     l1: for (; i <= sqrt; i += 2) {
-      for (int j = 0; j < smallPrimes.size() - 1; j++) {
-        if (i % smallPrimes.get(j) == 0) {
+      for (Long smallPrime : smallPrimes) {
+        if (i % smallPrime == 0 && i != smallPrime) {
           continue l1;
-        } else if (Math.sqrt(i) < smallPrimes.get(j)) {
+        } else if (Math.sqrt(i) > smallPrime) {
           break;
         }
       }
@@ -506,7 +501,7 @@ public class PolynomialSolutionButBetter {
   }
 
   public static ArrayList<Long> inCommon(ArrayList<Long> arr, ArrayList<Long> arr2) {
-    ArrayList<Long> inCommon = new ArrayList<Long>();
+    ArrayList<Long> inCommon = new ArrayList<>();
     for (int i = arr.size() - 1; i >= 0; i--) {
       for (int j = arr2.size() - 1; j >= 0; j--) {
         if (arr.get(i).equals(arr2.get(j))) {
@@ -521,7 +516,7 @@ public class PolynomialSolutionButBetter {
   }
 
   public static void main(String[] args) {
-    int[][] points = {
+    double[][] points = {
       {4, 93},
       {2, 884},
       {6, 313},
