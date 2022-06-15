@@ -5,7 +5,7 @@ import java.util.Scanner;
   // -> 4*3*2 = 24
   // -> 2*4 = 8
   // 3 times
-// Highest number found so far (as far as I know) is 277777788888899
+// Smallest number with highest times that has been found so far (as far as I know) is 277777788888899
 // Not much to write home about here
 public class MultiplicativePersistence {
   public static void multiply(String number, int times) {
