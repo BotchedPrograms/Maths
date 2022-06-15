@@ -280,9 +280,6 @@ public class PolynomialSolutionButBetter {
 
   public static void printSolution(double[][] arr, double[] arr2) {
     double[][] adjugate = getAdjugate(arr);
-
-    print(adjugate);
-
     double determinant = getDeterminant(arr);
     if (determinant == 0) {
       System.out.print("none");
