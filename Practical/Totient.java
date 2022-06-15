@@ -40,10 +40,10 @@ public class Totient {
     }
     int sqrt = (int) Math.sqrt(num);
     l1: for (; i <= sqrt; i += 2) {
-      for (int j = 0; j < smallPrimes.size() - 1; j++) {
-        if (i % smallPrimes.get(j) == 0) {
+      for (int j = 0; j < smallPrimes.size(); j++) {
+        if (i % smallPrimes.get(j) == 0 && i != smallPrimes.get(j)) {
           continue l1;
-        } else if (Math.sqrt(i) < smallPrimes.get(j)) {
+        } else if (Math.sqrt(i) > smallPrimes.get(j)) {
           break;
         }
       }
