@@ -524,10 +524,11 @@ public class PolynomialSolutionButBetter {
   }
 
   public static void main(String[] args) {
-    double[][] points = {
-      {0.1, 0.2},
-      {0.7, 1.4},
-      {1.2, 2.4}
+    int[][] points = {
+      {4, 93},
+      {2, 884},
+      {6, 313},
+      {9, 611}
     };
     printSolution(points);
   }
