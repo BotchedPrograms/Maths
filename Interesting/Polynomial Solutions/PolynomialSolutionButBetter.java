@@ -411,7 +411,7 @@ public class PolynomialSolutionButBetter {
     return Math.abs(a*b/gcf(a, b));
   }
 
-  // Gets lcm of numbers in int[]
+  // Gets lcm of numbers in long[]
   public static long lcm(long[] nums) {
     if (nums.length == 0) {
       return -1;
@@ -531,69 +531,4 @@ public class PolynomialSolutionButBetter {
     };
     printSolution(points);
   }
-
-
-
-  public static void print(int n) {
-    System.out.println(n);
-  }
-
-  // Prints int array
-  public static void print(int[] arr) {
-    for (int i = 0; i < arr.length; i++) {
-      System.out.print(arr[i]);
-      System.out.print(" ");
-    }
-  }
-
-  // Prints double array
-  public static void print(double[] arr) {
-    for (int i = 0; i < arr.length; i++) {
-      System.out.print(arr[i]);
-      System.out.print(" ");
-    }
-  }
-
-  // Prints 2d int array
-  public static void print(int[][] arr) {
-    int max = 0;
-    int length;
-    for (int i = 0; i < arr.length; i++) {
-      for (int j = 0; j < arr[i].length; j++) {
-        length = String.valueOf(arr[i][j]).length();
-        if (length > max) {
-          max = length;
-        }
-      }
-    }
-    for (int i = 0; i < arr.length; i++) {
-      for (int j = 0; j < arr[i].length; j++) {
-        System.out.printf("%" + (max+1) + "d", arr[i][j]);
-      }
-      System.out.println();
-    }
-  }
-
-  // Prints 2d double array
-  public static void print(double[][] arr) {
-    int max = 0;
-    int length;
-    for (int i = 0; i < arr.length; i++) {
-      for (int j = 0; j < arr[i].length; j++) {
-        length = String.valueOf(arr[i][j]).length();
-        if (length > max) {
-          max = length;
-        }
-      }
-    }
-    for (int i = 0; i < arr.length; i++) {
-      for (int j = 0; j < arr[i].length; j++) {
-        System.out.print(arr[i][j] + " ");
-      }
-      System.out.println();
-    }
-  }
-
-
-
 }
