@@ -16,17 +16,23 @@ public class Fraction {
     num = Integer.parseInt(fractionNums[0]);
     den = Integer.parseInt(fractionNums[1]);
   }
+  
+  // Fraction from 1 int
+  public Fraction(int numerator) {
+    num = numerator;
+    den = 1;
+  }
+  
+  // Fraction from 2 ints
+  public Fraction(int numerator, int denominator) {
+    num = numerator;
+    den = denominator;
+  }
 
   // Fraction from int[]
   public Fraction(int[] fraction) {
     num = fraction[0];
     den = fraction[1];
-  }
-
-  // Fraction from 2 ints
-  public Fraction(int numerator, int denominator) {
-    num = numerator;
-    den = denominator;
   }
 
   // Adds Fractions
