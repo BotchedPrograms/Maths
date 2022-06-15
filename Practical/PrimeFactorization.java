@@ -1,9 +1,9 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-
 // Gets prime factorization of number
   // 12 = 2 2 3 b/c 2 x 2 x 3 = 12
 // Program notably returns 1 if input is 1
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class PrimeFactorization {
   public static ArrayList<Long> factor(long num) {
     return factor(num, new ArrayList<Long>(), 3, new ArrayList<Long>());
@@ -49,7 +49,7 @@ public class PrimeFactorization {
     while (true) {
       input = scan.nextLine();
       // Checks if String is integer
-      // Don't know how it works, I just modified what I saw from stackoverflow
+       // Don't know how it works, I just modified what I saw from stackoverflow
       if (!input.matches("-?\\d+(\\d+)?")) {
         break;
       }
