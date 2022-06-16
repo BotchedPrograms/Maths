@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-// The toitent function counts the number of non-relatively coprimes from 1 to n
+// The toitent function counts the number of non-relatively primes from 1 to n
   // For n = 12:
     // 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
-    // 1, 5, 7, 11 aren't relatively coprime to 12 so the totient function gives 4
+    // 1, 5, 7, 11 aren't relatively prime to 12 so the totient function gives 4
 // Also equals n * (1 - 1/p1) * (1 - 1/p2) * ... where ps are the unique prime factors of n
   // For n = 12:
     // 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
