@@ -86,7 +86,7 @@ Most famous of these sequences is the Fibonacci's whom this program is named aft
         Packing your seeds in a circle is the best choice, the shape defined by the most area for the least perimeter
         You also want a pattern that builds upon itself; that makes a circle and can quickly make it grow bigger
         This can be done by placing a seed, rotating a bit, planting another seed, rotating a bit, and so forth
-            0 turns:             1/2 turns:         1/3 turns:       1/4 turns:      3/4 turns:     5/4 turns:
+   0 turns (anti-clockwise):    1/2 turns:          1/3 turns:       1/4 turns:      3/4 turns:     5/4 turns:
                                                     o                    o                             o
                                                       o                  o              o              o
           x o o o o o o        o o o x o o o            x o o          o x o o        o x o o        o x o o
