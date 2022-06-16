@@ -116,7 +116,7 @@ Most famous of these sequences is the Fibonacci's whom this program is named aft
                                        o o
                                             o o
         Graph's inaccurate, but point is that it would spiral for a little bit before forming straight lines for a while
-          It wouldn't be 3 lines, but 
+          It'd be more than 3 straight lines, but making any more would be torture
         This is because pi can actually be written as 3 +       1
                                                          ---------------
                                                             7   +   1
