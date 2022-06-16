@@ -1,16 +1,16 @@
 import java.util.ArrayList;
 
 // Gets different kinds of averages:
-// Type of average                                 Application
-// Arithmetic mean                                 Everywhere
-// Geometric mean                                  Finding rate of growth
-// Weighted mean                                   Grades
-// Root mean square (RMS)                          Alternating current
-// Harmonic mean                                   Presumably why Apple uses squircles of shape n = 4
-// Arithmetic-geometric mean (AGM)                 Hell if I know, I don't even know what I'm talking about
-// Metallic means                                  Not even really a mean. Used in construction though
-// Also median and mode(s), those too              For statistics anal-y-sis
-// You'll never unsee that last one, and I don't regret a thing
+  // Type of average                                 Application
+  // Arithmetic mean                                 Everywhere
+  // Geometric mean                                  Finding rate of growth
+  // Weighted mean                                   Grades
+  // Root mean square (RMS)                          Alternating current
+  // Harmonic mean                                   Presumably why Apple uses squircles of shape n = 4
+  // Arithmetic-geometric mean (AGM)                 Hell if I know, I don't even know what I'm talking about
+  // Metallic means                                  Not even really a mean. Used in construction though
+  // Also median and mode(s), those too              For statistics anal-y-sis
+  // You'll never unsee that last one, and I don't regret a thing
 // Methods repeated to work for int[] and double[]
 public class Averages {
   // (2 + 3 + 5 + 7) / 4 = 4.25
