@@ -11,7 +11,6 @@ import java.util.Scanner;
   If you input 3.1415926, this program will give you 3, 7, 15, 1,...
   If you input a double, you get the ...fraction parts? Sure, we'll go with that
     Vice versa too
-  Not really on the practical side of things, but it sure is related to fractions
  */
 public class FractionInfinitum {
   // Turns double to a fraction with a numerator and denominator, which we'll work with
