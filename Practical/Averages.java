@@ -32,7 +32,7 @@ public class Averages {
   }
 
   // (2 * 3 * 5 * 7) ^ (1/4) = 3.807
-  // Commonly in the form of √(a*b)
+    // Commonly in the form of √(a*b)
   public static double geometricMean(int[] nums) {
     // Product = product of all numbers in nums
     long product = 1;
@@ -132,7 +132,7 @@ public class Averages {
   }
 
   // Takes arithmetic and geometric means recursively
-  // 2 3 5 7 --> 4.25 and 3.807 --> 4.028 and 4.022 --> 4.025 and 4.025 --> 4.025
+    // 2 3 5 7 --> 4.25 and 3.807 --> 4.028 and 4.022 --> 4.025 and 4.025 --> 4.025
   public static double arithmeticGeometricMean(int[] nums) {
     return arithmeticGeometricMean(nums, Math.pow(10, -16));
   }
@@ -325,7 +325,7 @@ public class Averages {
   }
 
   // Gets max number in nums
-  // Only made for Integer b/c only here to condense mode code... at least a little bit
+    // Only made for Integer b/c only here to condense mode code... at least a little bit
   public static int getMax(ArrayList<Integer> nums) {
     int max = 0;
     for (Integer num : nums) {
