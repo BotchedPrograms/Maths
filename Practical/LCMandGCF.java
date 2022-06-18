@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 // Gets lowest common multiple (lcm) and greatest common factor (gcf)
-  // Not too hard to recreate but again, it's more trouble than it's worth
 
 public class LCMandGCF {
   // Gets lcm of 2 numbers
