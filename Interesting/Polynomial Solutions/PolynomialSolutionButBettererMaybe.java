@@ -1,8 +1,8 @@
-import java.util.ArrayList;
-
 // Same as PolynomialSolutionButBetter except this uses Fractions instead of doubles
   // More accurate but whole ordeal uses a lot of memory
     // Tried to get a java profiler to look at it, but gave up
+import java.util.ArrayList;
+
 public class PolynomialSolutionButBettererMaybe {
   // Multiples matrix by matrix
   public static long[][] multiply(long[][] arr, long[][] arr2) {
