@@ -11,6 +11,7 @@ import java.util.ArrayList;
     //       3                 9                  removing multiples of 3 / removing remaining third of numbers
     // 1           5     7            11          what's left is thus 12 * (1 - 1/2) * (1 - 1/3) = 4
 // Made by Euler (b/c of course) and is used in number theory and encryption
+
 public class Totient {
   public static int totient(long n) {
     if (n < 1) {
