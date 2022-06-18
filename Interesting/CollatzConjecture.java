@@ -3,7 +3,6 @@
   // Else if number is even, divide it by 2
 // Collatz Conjecture (aka many other names) states number should eventually go to 1
   // Infamously hard to prove or disprove
-
 import java.util.Scanner;
 
 public class CollatzConjecture {
