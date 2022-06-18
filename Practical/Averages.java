@@ -8,7 +8,7 @@ import java.util.ArrayList;
   // Root mean square (RMS)                          Alternating current
   // Harmonic mean                                   Presumably why Apple uses squircles of shape n = 4
   // Arithmetic-geometric mean (AGM)                 Hell if I know, I don't even know what I'm talking about
-  // Metallic means                                  Not even really a mean. Can be used in construction though
+  // Metallic mean                                   Not even really a mean. Can be used in construction though
   // Also median and mode(s), those too              For statistics anal-y-sis
   // You'll never unsee that last one, and I don't regret a thing
 // Methods repeated to work for int[] and double[]
