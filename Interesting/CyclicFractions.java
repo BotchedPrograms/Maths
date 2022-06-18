@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 // 1/7 is cyclic b/c all its multiples have the same repeating part, but they start in different places
   // 1/7 = 0.142857...
   // 2/7 = 0.285714...
@@ -8,6 +6,8 @@ import java.util.ArrayList;
   // 5/7 = 0.714285...
   // 6/7 = 0.857142...
 // Divides numbers and lists cyclic denominators like 7
+import java.util.ArrayList;
+
 public class CyclicFractions {
   // Prints a/b in base 10
   public static void divide(int a, int b) {
