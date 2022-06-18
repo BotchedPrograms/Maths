@@ -1,5 +1,6 @@
 // Base-10 to Base-Factorial and vice versa
   // "Factorial base representation has applications in combinatorics and crpytography" so that's cool
+
 public class BaseFactorial {
   // Gets factorial
     // Seems to be generally faster than recursion; point taken
