@@ -12,6 +12,7 @@ import java.util.ArrayList;
   // Also median and mode(s), those too              For statistics anal-y-sis
   // You'll never unsee that last one, and I don't regret a thing
 // Methods repeated to work for int[] and double[]
+
 public class Averages {
   // (2 + 3 + 5 + 7) / 4 = 4.25
   public static double arithmeticMean(int[] nums) {
