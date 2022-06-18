@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Scanner;
 /* pi can be written as 3 +                1
                             -------------------------------
                                    7       +       1
@@ -9,8 +11,6 @@
   If you input a double, you get the ...fraction parts? Sure, we'll go with that
     Vice versa too
  */
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class FractionInfinitum {
   // Turns double to a fraction with a numerator and denominator, which we'll work with
