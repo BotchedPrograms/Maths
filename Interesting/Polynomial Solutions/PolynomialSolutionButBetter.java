@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 // Gets polynomial that goes through given points
   // Does same thing as PolynomialSolution but w/ linear algebra
     // x can now be anything instead of x = 0, 1, 2, 3...
@@ -14,6 +12,8 @@ import java.util.ArrayList;
     [ 1  3  9  | 11 ]
     [ 1  5  25 | 13 ]
  */
+import java.util.ArrayList;
+
 public class PolynomialSolutionButBetter {
   // Multiples matrix by matrix
   public static long[][] multiply(long[][] arr, long[][] arr2) {
