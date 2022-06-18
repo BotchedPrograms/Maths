@@ -9,6 +9,7 @@ import java.util.Scanner;
 // Program can also return a long[] of those factors
   // Not mentioned in file name b/c wasn't sure what it would be called
     // Factors feels too short, Factorization might just be wrong, GetFactors sounds weird, UniqueFactors feels unnecessarily complicated, ...
+
 public class NumberOfFactors {
   public static int getNumberOfFactors(long num) {
     // Powers of prime factors
