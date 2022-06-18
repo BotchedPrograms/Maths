@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 // Given array of times they appear, returns corresponding list of combinations
   // sorry if im not being the clearest rn, this program drank all my brain juice. how rude
   // uhh... so like if you give 2 2 3 then it'll return an int[][] that looks like
@@ -19,7 +21,6 @@
       // one has to do some reversing to make it into this nice neat arrangement
       // it works the same way that the one binary conversion trick works if you ever heard of it
   // now that I semi-think about it, i don't think combinations is the right word, but it's whatever
-import java.util.Scanner;
 
 public class CombinationLister {
   public static int[][] listCombinations(int[] nums) {
