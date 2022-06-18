@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+
 /* pi can be written as 3 +                1
                             -------------------------------
                                    7       +       1
