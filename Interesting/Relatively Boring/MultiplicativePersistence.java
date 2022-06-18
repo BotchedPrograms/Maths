@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 // 2694
   // -> 2*6*9*4 = 432
   // -> 4*3*2 = 24
@@ -7,6 +5,8 @@ import java.util.Scanner;
   // 3 times
 // Smallest number with highest times that has been found so far (as far as I know) is 277777788888899
 // Not much to write home about here
+import java.util.Scanner;
+
 public class MultiplicativePersistence {
   public static void multiply(String number, int times) {
     long product = 1;
