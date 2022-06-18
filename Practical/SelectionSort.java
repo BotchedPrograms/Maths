@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// Sorts int[] into increasing order using selection sort
+
 public class SelectionSort {
   public static int[] sort(int[] nums) {
     int temp;
