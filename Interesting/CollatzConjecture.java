@@ -1,9 +1,10 @@
+import java.util.Scanner;
+
 // It's the 3n + 1 thing. Recap in case you live under a rock:
   // If number is odd, multiply it by 3 and add 1
   // Else if number is even, divide it by 2
 // Collatz Conjecture (aka many other names) states number should eventually go to 1
   // Infamously hard to prove or disprove
-import java.util.Scanner;
 
 public class CollatzConjecture {
   public static void printNumbers(long n) {
