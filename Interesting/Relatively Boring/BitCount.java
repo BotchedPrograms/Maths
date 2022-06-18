@@ -1,8 +1,8 @@
-import java.util.Scanner;
-
 // Gives the number of 1s in binary forms of 1 to number to another inclusive
   // 5 and 7 would give x because 101, 110, and 111 have 7 1s
 // Topic not interesting in itself, more so the calculations behind it
+import java.util.Scanner;
+
 public class BitCount {
   // Gives binary number; or at least it did before I modified it
   public static String toBinary(long num) {
