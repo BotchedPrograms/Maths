@@ -1,9 +1,10 @@
+import java.util.ArrayList;
+
 // Put in some numbers, and it will give you a polynomial with y = those numbers for x = 0, 1, 2...
   // For example, {0, 1, 4, 9} gives y = x^2
   // Not just any polynomial mind you, but the simplest one
 // As long as you don't go too ham on the numbers, it should be fine
 // More info at the bottom; I don't wanna clutter up the top too much
-import java.util.ArrayList;
 
 public class PolynomialSolution {
   // Gets the greatest common factor for two numbers
