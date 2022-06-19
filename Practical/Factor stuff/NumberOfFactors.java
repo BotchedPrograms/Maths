@@ -140,7 +140,6 @@ public class NumberOfFactors {
     Scanner scan = new Scanner(System.in);
     String input;
     long num;
-    long[] factors;
     System.out.println("Input a number: ");
     while (true) {
       input = scan.nextLine();
