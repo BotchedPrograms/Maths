@@ -11,6 +11,7 @@ import java.util.Scanner;
   If you input 3.1415926, this program will give you 3, 7, 15, 1,...
   If you input a double, you get the ...fraction parts? Sure, we'll go with that
     Vice versa too
+  Not really on the practical side of things, but it sure is related to fractions
  */
 
 public class FractionInfinitum {
@@ -57,10 +58,10 @@ public class FractionInfinitum {
   }
 
   // Turns fraction parts to double
-  public static double getNumber(ArrayList<Integer> numbers) {
-    int num = numbers.get(numbers.size() - 1);
-    int den = 1;
-    int oldNum;
+  public static double getNumber(ArrayList<Long> numbers) {
+    long num = numbers.get(numbers.size() - 1);
+    long den = 1;
+    long oldNum;
     for (int i = numbers.size() - 2; i >= 0; i--) {
       System.out.println(num + " " + den);
       oldNum = num;
@@ -71,15 +72,16 @@ public class FractionInfinitum {
   }
 
   // Same thing as previous method but int[] instead of ArrayList<Integer>
-  public static double getNumber(int[] numbers) {
-    int num = numbers[numbers.length - 1];
-    int den = 1;
-    int oldNum;
+  public static double getNumber(long[] numbers) {
+    long num = numbers[numbers.length - 1];
+    long den = 1;
+    long oldNum;
     for (int i = numbers.length - 2; i >= 0; i--) {
       oldNum = num;
       num = numbers[i] * oldNum + den;
       den = oldNum;
     }
+    System.out.println(num + "/" + den);
     return (double) num / den;
   }
 
@@ -121,9 +123,9 @@ public class FractionInfinitum {
       inputs = input.split(" ");
       if (inputs.length > 1 && inputs[0].matches("-?\\d+(\\d+)?")) {
         // If there are multiple numbers, turn those fraction parts to a double
-        int[] numbers = new int[inputs.length];
+        long[] numbers = new long[inputs.length];
         for (int i = 0; i < inputs.length; i++) {
-          numbers[i] = Integer.parseInt(inputs[i]);
+          numbers[i] = Long.parseLong(inputs[i]);
         }
         System.out.println(getNumber(numbers));
         System.out.println();
