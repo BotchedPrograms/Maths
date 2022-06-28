@@ -17,7 +17,6 @@ public class RotatingParabolas {
   }
 
   public static void main(String[] args) {
-    // Corresponds to the
     printEquation(-2, 6, 1, 0);
   }
 }
