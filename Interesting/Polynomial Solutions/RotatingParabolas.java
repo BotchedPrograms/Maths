@@ -5,26 +5,22 @@ import java.util.ArrayList;
 // Parabola math at the bottom
 
 public class RotatingParabolas {
-  public static void printEquation(double angle) {
-
+  // Rotates parabola of form y = a(x-h)^2 + k by angle counter-clockwise around origin
+  public static void printEquation(int a, int h, int k, double angle) {
+    printEquation(a, h, k, 0, 0, angle);
   }
 
-  // Input directrix of form y = mx + k1 and focal point of coords (xf, yf) to get corresponding parabola
-  public static void printEquation(double m, double k1, double xf, double yf) {
-    double k2 = (m*yf+xf)/m;
-    double xi = m*(k2-k1)/(m*m+1);
-    double yi = m*xi+k1;
-    double d = Math.sqrt((xf-xi)*(xf-xi)+(yf-yi)*(yf-yi))/2;
-    double a = 1/(4*d);
-    double theta = Math.acos((yf-yi)/(2*d))*Math.abs(xf-xi)/(xf-xi);
-    double sin = Math.sin(theta);
-    double cos = Math.cos(theta);
+  // Rotates parabola of form y = a(x-h)^2 + k by angle counter-clockwise around point of coords (xc, yc)
+  public static void printEquation(int a, int h, int k, int xc, int yc, double angle) {
+    angle *= -1;
+    double sin = Math.sin(angle);
+    double cos = Math.cos(angle);
     double c1 = a*cos*cos;
     double c2 = -2*a*sin*cos;
     double c3 = a*sin*sin;
-    double c4 = -sin + 2*a*(-xi*cos*cos + yi*sin*cos);
-    double c5 = -cos + 2*a*(xi*sin*cos - yi*sin*sin);
-    double c6 = d + yi*cos + xi*sin + a*(Math.pow(xi*cos - yi*sin, 2));
+    double c4 = -sin + 2*a*(-xc*cos*cos + yc*sin*cos - h*cos + xc*cos);
+    double c5 = -cos + 2*a*(xc*sin*cos - yc*sin*sin + h*sin - xc*sin);
+    double c6 = yc*cos + xc*sin + a*(Math.pow(-xc*cos + yc*sin - h + xc, 2)) - yc + k;
     System.out.printf("%fx^2 + %fxy + %fy^2 + %fx + %fy + %f = 0\n", c1, c2, c3, c4, c5, c6);
   }
 
@@ -36,6 +32,28 @@ public class RotatingParabolas {
       // First of all, new line should seem to split parabola in half
       // Relatively notably, intersection point btwn new line and parabola should be right btwn the intersection of the two lines and the focal point
         // That's b/c one way to define a parabola is as the set of points with the same distance from a line and a point
+  public static void printEquation(double m, double k1, double xf, double yf) {
+    double k2 = (m*yf+xf)/m;
+    double xi = m*(k2-k1)/(m*m+1);
+    double yi = m*xi+k1;
+    double d = Math.sqrt((xf-xi)*(xf-xi)+(yf-yi)*(yf-yi))/2;
+    double a = 1/(4*d);
+    double angle = Math.acos((yf-yi)/(2*d))*Math.abs(xf-xi)/(xf-xi);
+    double sin = Math.sin(angle);
+    double cos = Math.cos(angle);
+    double c1 = a*cos*cos;
+    double c2 = -2*a*sin*cos;
+    double c3 = a*sin*sin;
+    double c4 = -sin + 2*a*(-xi*cos*cos + yi*sin*cos);
+    double c5 = -cos + 2*a*(xi*sin*cos - yi*sin*sin);
+    double c6 = d + yi*cos + xi*sin + a*(Math.pow(xi*cos - yi*sin, 2));
+    System.out.printf("%fx^2 + %fxy + %fy^2 + %fx + %fy + %f = 0\n", c1, c2, c3, c4, c5, c6);
+  }
+
+  // Input directrix of form y = mx + k1 and focal point of coords (xf, yf) to get corresponding parabola
+    // Same as previous method but has int inputs and outputs
+    // Int outputs is crazy enough, but how it seems to always start with 1x^2 - I don't even know
+      // Don't make the numbers too big or it won't work
   public static void printEquation(int m, int k1, int xf, int yf) {
     double k2 = (double) (m*yf+xf)/m;
     double xi = m*(k2-k1)/(m*m+1);
