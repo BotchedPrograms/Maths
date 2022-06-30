@@ -62,7 +62,6 @@ public class FractionInfinitum {
     long den = 1;
     long oldNum;
     for (int i = numbers.size() - 2; i >= 0; i--) {
-      System.out.println(num + " " + den);
       oldNum = num;
       num = numbers.get(i) * oldNum + den;
       den = oldNum;
@@ -80,7 +79,6 @@ public class FractionInfinitum {
       num = numbers[i] * oldNum + den;
       den = oldNum;
     }
-    System.out.println(num + "/" + den);
     return (double) num / den;
   }
 
