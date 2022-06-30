@@ -3,7 +3,7 @@ import java.util.Scanner;
 // Makes fibonacci-esque sequence
   // i.e. next number in sequence is sum of previous 2
     // 0 1 --> 0 1 1 --> 0 1 1 2 --> 0 1 1 2 3 --> 0 1 1 2 3 5 --> 0 1 1 2 3 5 8 --> ...
-  // Program notably doesn't do previous 2 but as many as inputted
+  // Program notably doesn't only do previous 2 but as many as inputted
     // 1 1 1 --> 1 1 1 3 --> 1 1 1 3 5 --> 1 1 1 3 5 9 --> ...
 // More info at the bottom
 
