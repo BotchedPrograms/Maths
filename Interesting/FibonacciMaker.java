@@ -66,7 +66,7 @@ public class FibonacciMaker {
   }
 }
 /*
-Most famous of these sequences is the Fibonacci's whom this program is named after
+Most famous of these sequences is Fibonacci's whom this program is named after
   Famed especially b/c of how the ratio between consecutive numbers tends towards the golden ratio which appears throughout nature
   * Not the only one though, in fact the same property appears in any sequence where you add the last 2 numbers to get the next
       Let's say that r is the golden ratio from here on just because
