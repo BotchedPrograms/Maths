@@ -61,12 +61,12 @@ public class WeightedProbabilities {
     for (int weight : weights) {
       sum += weight;
     }
-    int[] times = new int[10];
+    int[] times = new int[items.length];
     for (int i = 0; i < sum*Math.pow(10, 6); i++) {
       times[getIndexOf(items, getItem(items, weights))]++;
     }
-    for (int i = 0; i < 10; i++) {
-      System.out.printf("%,9d\n", times[i]);
+    for (int time : times) {
+      System.out.printf("%,9d\n", time);
     }
   }
 }
