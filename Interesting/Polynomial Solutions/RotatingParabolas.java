@@ -271,13 +271,13 @@ Solving for rotated parabola when given the directrix and focal point
       sin, cos, or tan inverse are thus out of the question (since they only cover half a circle)
     With that in mind, it's actually easier if we define sin(0) and cos(0) since every theta in a circle has a unique combination of sin and cos
     Ok, I should confess something: the graph's a little misleading
-      The theta used in this program isn't the angle from the perpendicular and a vertical line at the origin, but the one at the intersection
+      The theta used in this program isn't the angle from the perpendicular and a vertical line at the y-intercept, but the one at the intersection
       I honestly think the math would still work and I did play around with it, but the final equation that I got to work consistently was the one at the intersection
     With that in mind, we can say sin(0) = o/h = (xf-xi)/(2d)
         xf for focal point, xi for intersection, 2d for distance between them
       cos(0) = a/h = (yf-yi)/(2d)
-    One might be worried if this is the 0 we want since we multiplied it by -1 earlier
-      Seeing how both sin and cos would be positive in this case, and that we'd need to rotate this parabola by a positive angle to be upright, yes it's the same 0 as our equations from earlier
+    One might be worried if this is the 0 we want, considering how we multiplied it by -1 earlier
+      Seeing how both sin and cos would be positive in this case, and that we'd need to rotate this parabola by a positive angle to be upright, 0 is not reversed and thus is the same one as our equations
   Solving for xc and yc
     One option is to have the upright parabola rotate around the y-intercept where the 0 in the graph is
     But as mentioned earlier, the equations used here revolve around the intersection, so xc = xi and yc = yi
