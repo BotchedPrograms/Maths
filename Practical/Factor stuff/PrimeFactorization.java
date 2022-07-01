@@ -30,13 +30,6 @@ public class PrimeFactorization {
         return factor(num/i, smallPrimes, i, factors);
       }
     }
-    /* Condensed version of
-    if (num != 1 || factors.length() == 0) {
-      System.out.println(num);
-    } else {
-      System.out.println();
-    }
-     */
     if (num != 1 || factors.size() == 0) {
       factors.add(num);
     }
