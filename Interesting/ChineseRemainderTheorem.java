@@ -1,4 +1,5 @@
 // About math behind theorem: https://youtu.be/zIFehsBHB8o
+
 public class ChineseRemainderTheorem {
   // Gets smallest positive number that have certain remainders when divided by certain numbers
     // 3 mod 5, 1 mod 7, and 6 mod 8 --> 78 b/c it's the smallest number under those parameters
