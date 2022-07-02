@@ -118,16 +118,22 @@ Most famous of these sequences is Fibonacci's whom this program is named after
                                             o o
         Graph's inaccurate, but point is that it would spiral for a little bit before forming straight lines for a while
           It'd be more than 3 straight lines, but making any more would be torture
-        This is because pi can actually be written as 3 +       1
-                                                         ---------------
-                                                            7   +   1
-                                                                 -------
-                                                                 15 + ...
+        This is because pi can be written as 3 +       1
+                                                ---------------
+                                                   7   +   1
+                                                        -------
+                                                        15 + ...
         Because 1/15 is fairly close to 0, pi is close to 3 + 1 / 7 = 22/7, which is a fraction so it has spokes
           It's only until later down the line does the 1/(15 + ...) start to matter and the lines spiral again
         With that in mind, the most irrational number (i.e. the number we want) would be 1 + 1 / ( 1 + 1 / ( 1 + 1 / 1 + ... ))
           i.e. the same thing as the pi thing but instead of 3, 7, 15, 1, 292,..., it's all 1s
-          r = 1 + 1 / ( 1 + 1 / 1 ...) = 1 + 1/r    (r = 1 + 1/r) * r    r^2 = r + 1    r^2 - r - 1 = 0
+                         1               1
+        ( r = 1 + --------------- = 1 + --- ) * r     r^2 = r + 1     r^2 - r - 1 = 0
+                     1   +   1           r
+                          -------
+                           1 + 1
+                              ---
+                              1 + ...
           It's the same thing as before, r = (1 + √5)/2
         Actually, in the same way that 5/4 turns equals 1/4 turns, (1 + √5)/2 turns = (1 + √5)/2 - 1 turns
           r = 1 + 1/r so r - 1 = 1/r, which is about 0.618...
@@ -146,7 +152,7 @@ Most famous of these sequences is Fibonacci's whom this program is named after
           -------  -  1      1 + √5 - 2
              2                              √5 - 1    3 + √5   3√5 + 5 - 3 - √5    2√5 + 2    √5 + 1
           --------------- = ------------ = -------- * ------ = ---------------- = --------- = ------- = r
-                   1 + √5                   3 - √5    3 + √5       9   -   5          4          2
+                  1 + √5                    3 - √5    3 + √5       9   -   5          4          2
             2  -  -------   4 - (1 + √5)
                      2
           Also, (r-1)/(2-r) = r   r-1 = r(2-r)   r-1 = 2r - r^2   r^2 - r - 1 = 0   r = golden ratio
