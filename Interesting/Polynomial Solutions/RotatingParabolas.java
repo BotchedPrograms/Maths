@@ -283,7 +283,7 @@ Solving for rotated parabola when given the directrix and focal point
     But as mentioned earlier, the equations used here revolve around the intersection, so xc = xi and yc = yi
   Solving for h and k
     h and k are the horizontal and vertical transformations of the upright parabola
-    If you imagine rotating the parabola in the graph upright, you'll see the upright vertex is at x = xi and y = yi + d (d being the distance between the intersection and the vertex)
+    If you imagine rotating the parabola in the graph around the intersection to make it upright, you'll see the upright vertex is at x = xi and y = yi + d (d being the distance between the intersection and the vertex)
     So h = xi and k = yi + d
   The equation can now be simplified to
     (y-yi)*cos(0) + (x-xi)*sin(0) + yi = a((x-xi)*cos(0) - (y-yi)*sin(0) - xi + xi)^2 + yi + d
