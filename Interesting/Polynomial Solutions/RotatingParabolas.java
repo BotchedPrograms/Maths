@@ -28,8 +28,9 @@ public class RotatingParabolas {
     // Graph y = mx + k1 and (xf,yf)
     // Graph y = (-1/m)x + k2 which should be the line perpendicular to the directrix that goes through the focal point
     // First of all, new line should seem to split parabola in half
-    // Relatively notably, intersection point btwn new line and parabola should be right btwn the intersection of the two lines and the focal point
+    // Relatively notably, intersection point btwn new line and parabola should be the midpoint of line made from the intersection and the focal point
       // That's b/c one way to define a parabola is as the set of points with the same distance from a line and a point
+      // Could eyeball the midpoint on desmos, or work out the x and y of the intersection manually, find the midpoint between that and the focal point, and see if it's on the parabola using wolframalpha
   public static void printEquation(double m, double k1, double xf, double yf) {
     // Variable names aren't named with much thought for clarity, just what I jot down when I was working this out
     double k2 = (m*yf+xf)/m;  // y-intercept of perpendicular
