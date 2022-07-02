@@ -74,7 +74,7 @@ public class RotatingParabolas {
     for (int i = 0; i < 6; i++) {
       // Math.round b/c round-off errors; coeffs[i]*lcd should be a whole number
         // "should" as in I did a few tests, it worked, and I'm praying it's true in general
-        // My math seems to tell me that lcd should be something else, but it seems to work perfectly fine without it, so I'm not pushing
+        // My math seems to tell me that lcd should be something else, but it seems to work perfectly fine as is, so I'm not pushing
       coeffs2[i] = Math.round(coeffs[i]*lcd);
     }
     long gcf = gcf(coeffs2);
