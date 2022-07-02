@@ -194,7 +194,7 @@ Focal points
     d      4a^2*(x-h)^2 - 1                 1
   ----- = ------------------ = a(x-h) - ---------
    x-h          4a(x-h)                  4a(x-h)
-                     x-h                  1
+                     x-h                 1
   d = a(x-h)^2 - --------- = a(x-h)^2 - ----
                    4a(x-h)               4a
   distance from focal point = a(x-h)^2 - d = a(x-h)^2 - (a(x-h)^2 - 1/(4a)) = 1/(4a)
