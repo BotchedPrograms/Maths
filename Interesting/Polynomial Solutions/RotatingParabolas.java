@@ -272,7 +272,7 @@ Solving for rotated parabola when given the directrix and focal point
     With that in mind, it's actually easier if we define sin(0) and cos(0) since every theta in a circle has a unique combination of sin and cos
     Ok, I should confess something: the graph's a little misleading
       The theta used in this program isn't the angle from the perpendicular and a vertical line at the y-intercept, but the one at the intersection
-      I honestly think the math would still work and I did play around with it, but the final equation that I got to work consistently was the one at the intersection
+      I honestly think the math would still work and I did play around with it, but the first equation that I got to work consistently was the one at the intersection
     With that in mind, we can say sin(0) = o/h = (xf-xi)/(2d)
         xf for focal point, xi for intersection, 2d for distance between them
       cos(0) = a/h = (yf-yi)/(2d)
