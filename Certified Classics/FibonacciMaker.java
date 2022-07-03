@@ -65,6 +65,7 @@ public class FibonacciMaker {
     scan.close();
   }
 }
+
 /*
 Most famous of these sequences is Fibonacci's whom this program is named after
   Famed especially b/c of how the ratio between consecutive numbers tends towards the golden ratio which appears throughout nature
