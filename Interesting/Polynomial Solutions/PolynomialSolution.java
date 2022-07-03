@@ -62,6 +62,21 @@ public class PolynomialSolution {
     }
     return factors;
   }
+  
+  public static ArrayList<Long> inCommon(ArrayList<Long> arr, ArrayList<Long> arr2) {
+    ArrayList<Long> inCommon = new ArrayList<>();
+    for (int i = arr.size() - 1; i >= 0; i--) {
+      for (int j = arr2.size() - 1; j >= 0; j--) {
+        if (arr.get(i).equals(arr2.get(j))) {
+          inCommon.add(arr.get(i));
+          arr.remove(i);
+          arr2.remove(j);
+          break;
+        }
+      }
+    }
+    return inCommon;
+  }
 
   // In case you're wondering, I made this term up
   public static long[] ultimateDerivative(long[] numbers) {
