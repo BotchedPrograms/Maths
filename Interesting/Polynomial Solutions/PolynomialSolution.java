@@ -7,27 +7,60 @@ import java.util.ArrayList;
 // More info at the bottom; I don't wanna clutter up the top too much
 
 public class PolynomialSolution {
-  // Gets the greatest common factor for two numbers
+  // Gets gcf of 2 numbers
+    // Gets prime factors and returns the product of the ones they have in common
   public static long gcf(long a, long b) {
-    for (long i = Math.min(Math.abs(a), Math.abs(b)); i > 0; i--) {
-      if (a % i == 0 && b % i == 0) {
-        return i;
-      }
+    ArrayList<Long> factorsA = factor(a);
+    ArrayList<Long> factorsB = factor(b);
+    ArrayList<Long> inCommon = inCommon(factorsA, factorsB);
+    long product = 1;
+    for (Long aLong : inCommon) {
+      product *= aLong;
     }
-    return -1;
+    return product;
   }
 
-  // Gets the greatest common factor for an array
-  public static long gcf(long[] numbers) {
-    l1: for (long i = minAbs(numbers); i > 0; i--) {
-      for (int j = 0; j < numbers.length; j++) {
-        if (numbers[j] % i != 0) {
-          continue l1;
-        }
-      }
-      return i;
+  // Gets gcf of numbers in long[]
+  public static long gcf(long[] nums) {
+    if (nums.length == 0) {
+      return -1;
     }
-    return -1;
+    if (nums.length == 1) {
+      return nums[0];
+    }
+    long gcf = gcf(nums[0], nums[1]);
+    for (int i = 1; i < nums.length; i++) {
+      if (gcf == 1) {
+        break;
+      }
+      gcf = gcf(gcf, nums[i]);
+    }
+    return gcf;
+  }
+
+  public static ArrayList<Long> factor(long num) {
+    return factor(num, 3, new ArrayList<>());
+  }
+
+  public static ArrayList<Long> factor(long num, long i, ArrayList<Long> factors) {
+    if (num % 2 == 0) {
+      if (num == 0) {
+        return factors;
+      }
+      factors.add(2L);
+      return factor(num/2, i, factors);
+    }
+    long sqrt = (long) Math.sqrt(num);
+    for (; i <= sqrt; i += 2) {
+      if (num % i == 0) {
+        factors.add(i);
+        return factor(num/i, i, factors);
+      }
+    }
+    if (num != 1) {
+      factors.add(num);
+    }
+    return factors;
   }
 
   // In case you're wondering, I made this term up
