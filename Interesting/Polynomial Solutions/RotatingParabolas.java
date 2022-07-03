@@ -119,30 +119,25 @@ public class RotatingParabolas {
   }
 
   public static ArrayList<Long> factor(long num) {
-    return factor(Math.abs(num), new ArrayList<>(), 3, new ArrayList<>());
+    return factor(num, 3, new ArrayList<>());
   }
 
-  public static ArrayList<Long> factor(long num, ArrayList<Long> smallPrimes, int i, ArrayList<Long> factors) {
+  public static ArrayList<Long> factor(long num, long i, ArrayList<Long> factors) {
     if (num % 2 == 0) {
+      if (num == 0) {
+        return factors;
+      }
       factors.add(2L);
-      return factor(num/2, smallPrimes, i, factors);
+      return factor(num/2, i, factors);
     }
-    int sqrt = (int) Math.sqrt(num);
-    l1: for (; i <= sqrt; i += 2) {
-      for (Long smallPrime : smallPrimes) {
-        if (i % smallPrime == 0 && i != smallPrime) {
-          continue l1;
-        } else if (Math.sqrt(i) > smallPrime) {
-          break;
-        }
-      }
-      smallPrimes.add((long) i);
+    long sqrt = (long) Math.sqrt(num);
+    for (; i <= sqrt; i += 2) {
       if (num % i == 0) {
-        factors.add((long) i);
-        return factor(num/i, smallPrimes, i, factors);
+        factors.add(i);
+        return factor(num/i, i, factors);
       }
     }
-    if (num != 1 || factors.size() == 0) {
+    if (num != 1) {
       factors.add(num);
     }
     return factors;
