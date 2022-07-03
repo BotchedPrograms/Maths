@@ -3,34 +3,28 @@ import java.util.Scanner;
 
 // Gets prime factorization of number
   // 12 = 2 2 3 b/c 2 x 2 x 3 = 12
-// Program notably returns 1 if input is 1
 
 public class PrimeFactorization {
   public static ArrayList<Long> factor(long num) {
-    return factor(num, new ArrayList<Long>(), 3, new ArrayList<Long>());
+    return factor(num, 3, new ArrayList<>());
   }
-  
-  public static ArrayList<Long> factor(long num, ArrayList<Long> smallPrimes, int i, ArrayList<Long> factors) {
+
+  public static ArrayList<Long> factor(long num, long i, ArrayList<Long> factors) {
     if (num % 2 == 0) {
+      if (num == 0) {
+        return factors;
+      }
       factors.add(2L);
-      return factor(num/2, smallPrimes, i, factors);
+      return factor(num/2, i, factors);
     }
-    int sqrt = (int) Math.sqrt(num);
-    l1: for (; i <= sqrt; i += 2) {
-      for (int j = 0; j < smallPrimes.size(); j++) {
-        if (i % smallPrimes.get(j) == 0 && i != smallPrimes.get(j)) {
-          continue l1;
-        } else if (Math.sqrt(i) > smallPrimes.get(j)) {
-          break;
-        }
-      }
-      smallPrimes.add((long) i);
+    long sqrt = (long) Math.sqrt(num);
+    for (; i <= sqrt; i += 2) {
       if (num % i == 0) {
-        factors.add((long) i);
-        return factor(num/i, smallPrimes, i, factors);
+        factors.add(i);
+        return factor(num/i, i, factors);
       }
     }
-    if (num != 1 || factors.size() == 0) {
+    if (num != 1) {
       factors.add(num);
     }
     return factors;
@@ -40,15 +34,16 @@ public class PrimeFactorization {
     Scanner scan = new Scanner(System.in);
     String input;
     long num;
+    System.out.println("Enter numbers:");
     while (true) {
       input = scan.nextLine();
       // Checks if String is integer
-       // Don't know how it works, I just modified what I saw from stackoverflow
+        // Don't know how it works, I just modified what I saw from stackoverflow
       if (!input.matches("-?\\d+(\\d+)?")) {
         break;
       }
       num = Long.parseLong(input);
-      System.out.println(factor(num, new ArrayList<Long>(), 3, new ArrayList<Long>()));
+      System.out.println(factor(num));
     }
   }
 }
