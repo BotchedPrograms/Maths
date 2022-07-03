@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 // Fraction but static methods
   // Could just combine them but that's gross
 
@@ -5,6 +7,7 @@
   // Methods repeated 2-3 times to work for Strings, int[]s, and/or ints
     // String fractions represented like "2/3", "5/6", etc.
   // Made so I don't have to waste time remaking this
+
 public class FractionMaths {
   public static String add(String fraction1, String fraction2) {
     String[] fractionNums1 = fraction1.split("/");
@@ -94,14 +97,57 @@ public class FractionMaths {
     return divide(add(fraction1, fraction2), new int[] {2, 1});
   }
 
+  // Gets gcf of 2 numbers
+    // Gets prime factors and returns the product of the ones they have in common
   public static int gcf(int a, int b) {
-    // Math.min better but troublesome for 0 and negative numbers
-    for (int i = Math.max(a,b); i > 0; i--) {
-      if (a % i == 0 && b % i == 0) {
-        return i;
+    ArrayList<Integer> factorsA = factor(a);
+    ArrayList<Integer> factorsB = factor(b);
+    ArrayList<Integer> inCommon = inCommon(factorsA, factorsB);
+    int product = 1;
+    for (Integer anInt : inCommon) {
+      product *= anInt;
+    }
+    return product;
+  }
+  
+  public static ArrayList<Integer> factor(Integer num) {
+    return factor(num, 3, new ArrayList<>());
+  }
+
+  public static ArrayList<Integer> factor(int num, int i, ArrayList<Integer> factors) {
+    if (num % 2 == 0) {
+      if (num == 0) {
+        return factors;
+      }
+      factors.add(2L);
+      return factor(num/2, i, factors);
+    }
+    int sqrt = (int) Math.sqrt(num);
+    for (; i <= sqrt; i += 2) {
+      if (num % i == 0) {
+        factors.add(i);
+        return factor(num/i, i, factors);
       }
     }
-    return -1;
+    if (num != 1) {
+      factors.add(num);
+    }
+    return factors;
+  }
+
+  public static ArrayList<Integer> inCommon(ArrayList<Integer> arr, ArrayList<Integer> arr2) {
+    ArrayList<Integer> inCommon = new ArrayList<>();
+    for (int i = arr.size() - 1; i >= 0; i--) {
+      for (int j = arr2.size() - 1; j >= 0; j--) {
+        if (arr.get(i).equals(arr2.get(j))) {
+          inCommon.add(arr.get(i));
+          arr.remove(i);
+          arr2.remove(j);
+          break;
+        }
+      }
+    }
+    return inCommon;
   }
 
   public static String simplify(String fraction) {
