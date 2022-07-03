@@ -76,29 +76,22 @@ public class NumberOfFactors {
   }
 
   public static ArrayList<Long> factor(long num) {
-    return factor(num, new ArrayList<>(), 3, new ArrayList<>());
+    return factor(num, 3, new ArrayList<>());
   }
 
-  public static ArrayList<Long> factor(long num, ArrayList<Long> smallPrimes, int i, ArrayList<Long> factors) {
+  public static ArrayList<Long> factor(long num, long i, ArrayList<Long> factors) {
     if (num % 2 == 0) {
-      factors.add(2L);
-      factor(num/2, smallPrimes, i, factors);
-      return factors;
-    }
-    int sqrt = (int) Math.sqrt(num);
-    l1: for (; i <= sqrt; i += 2) {
-      for (Long smallPrime : smallPrimes) {
-        if (i % smallPrime == 0 && i != smallPrime) {
-          continue l1;
-        } else if (Math.sqrt(i) > smallPrime) {
-          break;
-        }
-      }
-      smallPrimes.add((long) i);
-      if (num % i == 0) {
-        factors.add((long) i);
-        factor(num/i, smallPrimes, i, factors);
+      if (num == 0) {
         return factors;
+      }
+      factors.add(2L);
+      return factor(num/2, i, factors);
+    }
+    long sqrt = (long) Math.sqrt(num);
+    for (; i <= sqrt; i += 2) {
+      if (num % i == 0) {
+        factors.add(i);
+        return factor(num/i, i, factors);
       }
     }
     if (num != 1) {
