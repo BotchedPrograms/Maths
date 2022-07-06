@@ -127,7 +127,7 @@ Most famous of these sequences is Fibonacci's whom this program is named after
         Because 1/15 is fairly close to 0, pi is close to 3 + 1 / 7 = 22/7, which is a fraction so it has spokes
           It's only until later down the line does the 1/(15 + ...) start to matter and the lines spiral again
         With that in mind, the most irrational number (i.e. the number we want) would be 1 + 1 / ( 1 + 1 / ( 1 + 1 / 1 + ... ))
-          i.e. the same thing as the pi thing but instead of 3, 7, 15, 1, 292,..., it's all 1s
+          i.e. the same thing as the pi thing but instead of 3, 7, 15, ... , it's all 1s
                          1               1
         ( r = 1 + --------------- = 1 + --- ) * r     r^2 = r + 1     r^2 - r - 1 = 0
                      1   +   1           r
