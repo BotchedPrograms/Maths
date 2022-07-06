@@ -27,6 +27,11 @@ public class CyclicFractions {
     System.out.println();
   }
   
+  // Gets repeating part of 1/b in base 10
+  public static ArrayList<Integer> getDigits(int b) {
+    return getDigits(1, b, 10);
+  }
+  
   // Gets repeating part of a/b in base 10
   public static ArrayList<Integer> getDigits(int a, int b) {
     return getDigits(a, b, 10);
