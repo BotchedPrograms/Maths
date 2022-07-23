@@ -11,7 +11,7 @@ import java.util.Scanner;
   // https://www.youtube.com/watch?v=KtT_cgMzHx8
 // What this program does is if you input 365, it gives you 23
   // If you input a number, it gives you the number of things needed for a match to be likelier than not
-// Mathematical explanation for solution: https://www.reddit.com/r/theydidthemath/comments/w4an7h/request_if_i_try_to_save_a_file_as_crghguhgk_what/
+// Mathematical explanation for how to work that number out: https://www.reddit.com/r/theydidthemath/comments/w4an7h/request_if_i_try_to_save_a_file_as_crghguhgk_what/
 
 public class BirthdayParadox {
   // https://stackoverflow.com/questions/739532/logarithm-of-a-bigdecimal
