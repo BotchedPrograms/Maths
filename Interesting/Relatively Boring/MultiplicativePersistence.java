@@ -9,6 +9,10 @@ import java.util.Scanner;
 // Not much to write home about here
 
 public class MultiplicativePersistence {
+  public static void multiplyOut(String number) {
+    multiplyOut(number, 0);
+  }
+  
   public static void multiplyOut(String number, int times) {
     long product = 1;
     if (number.length() != 1) {
@@ -33,7 +37,7 @@ public class MultiplicativePersistence {
       if (!input.matches("-?\\d+(\\d+)?")) {
         break;
       }
-      multiplyOut(input, 0);
+      multiplyOut(input);
     }
     scan.close();
   }
