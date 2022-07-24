@@ -94,7 +94,7 @@ public class CombinationLister {
     while (true) {
       input = scan.nextLine().split(" ");
       // Checks if String is integer
-      // Don't know how it works, I just modified what I saw from stackoverflow
+        // Don't know how it works, I just modified what I saw from stackoverflow
       if (input.length != 2) break;
       if (!input[0].matches("-?\\d+(\\d+)?") || !input[1].matches("-?\\d+(\\d+)?")) break;
       print(listCombinations(Integer.parseInt(input[0]), Integer.parseInt(input[1])));
