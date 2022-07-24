@@ -1,29 +1,34 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
-//  C  = the combinations of 5 items out of 7 possible ones
-// 5 7
-// Program gives you them if you input 5 and 7
+//  C  = the number of combinations of 5 items out of 7 possible ones
+// 7 5
+  // nCr = n!/((n-r)!r!)
+// Program gives you those combinations if you input 7 and 5
 
 public class CombinationLister {
   /* Explanation
-  Let's say a = 3 and b = 6
-  First gets all numbers from 000 - 333 (length a) in base-4
-  Removes numbers whose digits are greater than 3 (b-a again)
-  What's left in this case is 000 001 002 003 010 011 012 020 021 030 100 101 102 110 111 120 200 201 210 300
-  We take numbers 0 1 2 3 4 5 6
-  000 means index 0 of 0123456 (0), index 0 of 123456 (1), and index 0 of 23456 (2)
-  120 means index 1 of 0123456 (1), index 2 of 23456  (4), and index 0 of 56    (5)
-  Do that for all the numbers and you get the combinations
-  
+    Let's say a = 3 and b = 6
+    First gets all numbers from 000 - 333 (length a) in base-4 (b-a+1)
+    Removes numbers whose digits are greater than 3 (b-a)
+    What's left in this case is 000 001 002 003 010 011 012 020 021 030 100 101 102 110 111 120 200 201 210 300
+    We take numbers 0 1 2 3 4 5 6
+    000 means index 0 of 0123456 (0), index 0 of 123456 (1), and index 0 of 23456 (2)
+    120 means index 1 of 0123456 (1), index 2 of 23456  (4), and index 0 of 56    (5)
+    Do that for all the numbers and you get the combinations
+  There's probably definitely a better way to do this
   */
-  public static int[][] listCombinations(int a, int b) {
+  
+  // b then a b/c I forgot it's 7C5 not 5C7
+  public static int[][] listCombinations(int b, int a) {
     ArrayList<String> nums = new ArrayList<>();
-    // Sets end to 300, as in it only does 000-300, not actually 000-333 since 301-333 are evidently too much 
-      // Gets end early to know how long 000 should be
-    int end = (int) ((b-2)*Math.pow(b-1, a-1));
-    String length = "%0" + baseA(end, b-1).length() + "d";  // Adds 0s to the front
+    // Sets end to 300, as in it only does 000-300, not actually 000-333 since 301-333 are evidently too much
+    int end = (int) ((b-a)*Math.pow(b-a+1, a-1));
+    String length = "%0" + a + "d";
     for (int i = 0; i <= end; i++) {
-      nums.add(String.format(length, Integer.parseInt(baseA(i, b-1))));  // Putting the numbers in base
+      // Putting the numbers in base-(b-a+1)
+        // String.format part adds 0s
+      nums.add(String.format(length, Integer.parseInt(baseA(i, b-a+1))));
     }
     // Gets rid of digits greater than b-a
     for (int i = nums.size() - 1; i >= 0; i--) {
@@ -33,10 +38,12 @@ public class CombinationLister {
     }
     int[][] perms = new int[nums.size()][a];
     int[] wholes = new int[b];
+    // Take the numbers from 0 - b
     for (int i = 0; i < b; i++) {
       wholes[i] = i;
     }
     int index;
+    // Does the index # of numbers stuff
     for (int i = 0; i < nums.size(); i++) {
       index = 0;
       for (int j = 0; j < a; j++) {
@@ -81,6 +88,17 @@ public class CombinationLister {
   }
 
   public static void main(String[] args) {
-    print(listCombinations(5, 10));
+    Scanner scan = new Scanner(System.in);
+    String[] input;
+    System.out.println("Enter a number: ");
+    while (true) {
+      input = scan.nextLine().split(" ");
+      // Checks if String is integer
+      // Don't know how it works, I just modified what I saw from stackoverflow
+      if (input.length != 2) break;
+      if (!input[0].matches("-?\\d+(\\d+)?") || !input[1].matches("-?\\d+(\\d+)?")) break;
+      print(listCombinations(Integer.parseInt(input[0]), Integer.parseInt(input[1])));
+    }
+    scan.close();
   }
 }
