@@ -12,17 +12,13 @@ public class ChineseRemainderTheoremHelper {
     ArrayList<Integer> arr = new ArrayList<>();
     for (int i = 0; ; i++) {
       if (a == 1) {
-        int num1 = b+1;
-        int num2 = 1;
-        arr.add(0, num1);
-        arr.add(0, num2);
+        arr.add(0, b+1);
+        arr.add(0, 1);
         return arr;
       }
       if (b == 1) {
-        int num1 = 1;
-        int num2 = a-1;
-        arr.add(0, num1);
-        arr.add(0, num2);
+        arr.add(0, 1);
+        arr.add(0, a-1);
         return arr;
       }
       if (i % 2 == 0) {
