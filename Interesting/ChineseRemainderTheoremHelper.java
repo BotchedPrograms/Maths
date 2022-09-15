@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class ChineseRemainderTheoremHelper {
 
   // A continuation of Chinese Remainder Theorem
-  // Given a and b, returns n such that a*n mod b = 1 mod b
+  // Given a and b, returns n such that a*n mod b = 1
     // No explanations and clarity b/c this program drained my last remaining brain cell
     // Only half true, will show general idea but not how any of it is translated to code here
 
