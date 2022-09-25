@@ -3,7 +3,6 @@
 
 public class BaseFactorial {
   // Gets factorial
-    // Seems to be generally faster than recursion; point taken
   public static long factorial(int num) {
     long fac = 1;
     for (int i = 1; i <= num; i++) {
@@ -14,18 +13,14 @@ public class BaseFactorial {
 
   // Converts numbers to characters
   public static char overboard(long num) {
-    // Converts num to letter 10-35 -> (A-Z)
-    if (num > 9) {
-      return (char) (num+55);
-    }
-    // Converts num to digit 0-9 -> (0-9)
-    return (char) (num+48);
+    String alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    return alphabet.charAt((int) num);
   }
 
   // Converts Strings to numbers
   public static long overboard(String digit) {
-    String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    return (long) alphabet.indexOf(digit)+10;
+    String alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    return alphabet.indexOf(digit);
   }
 
   // Converts decimal to base-factorial
