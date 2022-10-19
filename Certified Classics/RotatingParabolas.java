@@ -204,7 +204,7 @@ Rotating things
     C ------------------
     Where * is the original point, *' is the rotated one, a is the angle * is rotated from the horizontal, b is the angle rotated from angle a, C is the center of rotation, and h is the distance between the center and * (or *')
       sin(a) = y/h and cos(a) = x/h, so x = h*cos(a) and y = h*sin(a)
-      sin(a+b) = y'/h and cos(a+b) = y'/h, so x' = h*cos(a+b) and y' = h*sin(a+b)
+      sin(a+b) = y'/h and cos(a+b) = x'/h, so x' = h*cos(a+b) and y' = h*sin(a+b)
       x' = h*(cos(a)cos(b) - sin(a)sin(b)) = h*cos(a)cos(b) - h*sin(a)sin(b) = x*cos(b) - y*sin(b)
       y' = h*(sin(a)cos(b) + cos(a)sin(b)) = h*sin(a)cos(b) + h*cos(a)sin(b) = y*cos(b) + x*sin(b)
     Thus, if we rotate * by an angle 0, we get the equations
@@ -218,7 +218,7 @@ Rotating things
       y' = (a(x-h)^2 + k)*cos(0) + x*sin(0)
     What can we do with this? Not much (or at least not easily), so what we actually do is set y' = a(x'-h)^2 + k
       y' = a(x'-h)^2 + k
-      y*cos(0) + x*sin(0) = a((x*cos(0) - y*sin(0) - h)^2 + k
+      y*cos(0) + x*sin(0) = a(x*cos(0) - y*sin(0) - h)^2 + k
     From here, if you know 0, you can simplify this to an equation in the form of ax^2 + bxy + cy^2 + dx + ey + f = 0 (zero this time, not theta)
     Important note: recall how x and y are the old points and x' and y' are the new ones
       By making y' be an upright parabola and solving for x and y, we make the new parabola upright and solve for the old one
