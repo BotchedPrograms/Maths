@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
-public class ChineseRemainderTheoremHelper {
+public class ModularInverse {
 
-  // A continuation of Chinese Remainder Theorem
+  // Made to help with the Chinese Remainder Theorem
   // Given a and b, returns n such that a*n mod b = 1
     // No explanations and clarity b/c this program drained my last remaining brain cell
     // Only half true, will show general idea but not how any of it is translated to code here
