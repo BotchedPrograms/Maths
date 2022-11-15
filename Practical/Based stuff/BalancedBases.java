@@ -50,6 +50,7 @@ public class BalancedBases {
         // Quotients: 5.734693, 5.142857, 1 --> 551
       // Reason this isn't used is because finding first power of 7 takes time
   public static String convertDecTo(BigInteger num, int baseTo) {
+    if (num.equals(BigInteger.ZERO)) return "0";
     StringBuilder sb = new StringBuilder();
     BigInteger bT = BigInteger.valueOf(baseTo);
     BigInteger[] bIs;
@@ -63,6 +64,7 @@ public class BalancedBases {
 
   // Base-10 as base-10, not base-10-balanced
   public static String convertDecToPure(BigInteger num, int baseTo) {
+    if (num.equals(BigInteger.ZERO)) return "0";
     StringBuilder sb = new StringBuilder();
     BigInteger bT = BigInteger.valueOf(baseTo);
     while (num.compareTo(BigInteger.ZERO) > 0) {
