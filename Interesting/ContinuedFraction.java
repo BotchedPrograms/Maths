@@ -13,7 +13,7 @@ import java.util.Scanner;
     Vice versa too
  */
 
-public class FractionInfinitum {
+public class ContinuedFraction {
   // Turns double to a fraction with a numerator and denominator, which we'll work with
   public static ArrayList<Integer> getParts(double num) {
     // length of decimal part = length of double - length of int part - 1
