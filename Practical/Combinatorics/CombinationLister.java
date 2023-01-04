@@ -50,7 +50,7 @@ public class CombinationLister {
    *   of the numbers after the previous one.
    * </p>
    * <p>
-   *   I made this program with this second way in mind, but, not that I think about it,
+   *   I made this program with this second way in mind, but, now that I think about it,
    *   the first way seems possible. I'm not changing it now though since it'd be much
    *   more trouble than it's worth.
    * </p>
