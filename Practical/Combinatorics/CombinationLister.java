@@ -51,8 +51,8 @@ public class CombinationLister {
    * </p>
    * <p>
    *   I made this program with this second way in mind, but, not that I think about it,
-   *   the first way seems possible. I'm not changing it now though since it'd be more
-   *   much more trouble than it's worth.
+   *   the first way seems possible. I'm not changing it now though since it'd be much
+   *   more trouble than it's worth.
    * </p>
    * <p>
    *   Anyways, this program turns the 0 0 2 0 1 from ArrayList to 0 1 4 5 7 in an
