@@ -34,35 +34,82 @@ public class MixedRadix {
   }
 
   /**
-   * Returns a String representation of the "mixed-radix numeral" of num
+   * Returns an int array representation of the "mixed radix numeral" of num
+   * using this MixedRadix's radices.
+   * <p>
+   *   For example, 10000 minutes = 0 weeks, 6 days, 22 hours, and 40 minutes.
+   *   Thus, toRadix(10000) = {0, 6, 22, 40} (if radices are 7, 24, 60).
+   * </p>
+   *
+   * @param num int whose mixed radix numeral is returned
+   * @return an int array representing the mixed radix numeral of num
+   */
+  public int[] toRadix(int num) {
+    int[] digits = new int[radices.length + 1];
+    int quotient = num;
+    for (int i = 0; i < radices.length; i++) {
+      int radix = radices[radices.length - i - 1];
+      // Use of modifiedMod and euclideanDivision allows it to work with negative radices
+      digits[digits.length - i -1] = modifiedMod(quotient, radix);
+      quotient = euclideanDivision(quotient, radix);
+    }
+    digits[0] = quotient;
+
+    return digits;
+  }
+
+  /**
+   * Returns a String representation of the "mixed radix numeral" of num
    * using this MixedRadix's radices.
    * <p>
    *   For example, 10000 minutes = 0 weeks, 6 days, 22 hours, and 40 minutes.
    *   Thus, toRadix(10000) = "0 6 22 40" (if radices are 7, 24, 60).
    * </p>
    *
-   * @param num int whose mixed-radix numeral is returned
-   * @return a String representing the mixed-radix numeral of num
+   * @param num int whose mixed radix numeral is returned
+   * @return a String representing the mixed radix numeral of num
    */
-  public String toRadix(int num) {
-    int[] digits = new int[radices.length + 1];
-    int quotient = num;
-    for (int i = 0; i < radices.length; i++) {
-      int radix = radices[radices.length - i - 1];
-      // Use of modifiedMod and euclideanDivision allows it to work with negative radices
-      digits[i] = modifiedMod(quotient, radix);
-      quotient = euclideanDivision(quotient, radix);
-    }
-    digits[digits.length - 1] = quotient;
+  public String toRadixString(int num) {
+    int[] digits = toRadix(num);
 
     StringBuilder sb = new StringBuilder();
-    sb.append(digits[digits.length - 1]);
+    sb.append(digits[0]);
     for (int i = 1; i < digits.length; i++) {
       sb.append(" ");
-      sb.append(digits[digits.length - i - 1]);
+      sb.append(digits[i]);
     }
 
     return sb.toString();
+  }
+
+  /**
+   * Returns the int value of an int array using this MixedRadix's radices.
+   * <p>
+   *   For example, 0 weeks, 6 days, 22 hours, and 40 minutes = 10000 minutes.
+   *   Thus, fromRadix("0 6 22 40") = 10000 (if radices are 7, 24, 60).
+   * </p>
+   *
+   * @param digits the int array representation of a mixed radix numeral whose value is returned
+   * @return the int value of tab using this MixedRadix's radices
+   */
+  public int fromRadix(int[] digits) {
+    int sum = 0;
+    int product = 1;
+    for (int i = 0; i < digits.length - 1; i++) {
+      int digit = digits[digits.length - i - 1];
+      sum += digit * product;
+      /* Unfortunate edge case caused by how there can be more numbers
+        in tab than there are radices. 1 more to be exact. Why they
+        aren't equal is because the first radix should always be infinity,
+        but that sure doesn't fit in an int array nicely. Besides, excluding
+        it isn't that a big deal.
+       */
+      if (radices.length - i - 1 >= 0) {
+        product *= radices[radices.length - i - 1];
+      }
+    }
+    sum += digits[0] * product;
+    return sum;
   }
 
   /**
@@ -72,28 +119,16 @@ public class MixedRadix {
    *   Thus, fromRadix("0 6 22 40") = 10000 (if radices are 7, 24, 60).
    * </p>
    *
-   * @param tab the String whose value is returned
+   * @param tab the String representation of a mixed radix numeral whose value is returned
    * @return the int value of tab using this MixedRadix's radices
    */
   public int fromRadix(String tab) {
     String[] digits = tab.split(" ");
-    int sum = 0;
-    int product = 1;
-    for (int i = 0; i < digits.length - 1; i++) {
-      int digit = Integer.parseInt(digits[digits.length - i - 1]);
-      sum += digit * product;
-      /* Unfortunate edge case caused by how there can be more numbers
-        in tab than there are radices. 1 more to be exact. Why they
-        aren't equal is because the first radix should always be infinity,
-        but that sure doesn't fit in an int array nicely and excluding it
-        isn't that a big deal.
-       */
-      if (radices.length - i - 1 >= 0) {
-        product *= radices[radices.length - i - 1];
-      }
+    int[] digitsInts = new int[digits.length];
+    for (int i = 0; i < digits.length; i++) {
+      digitsInts[i] = Integer.parseInt(digits[i]);
     }
-    sum += Integer.parseInt(digits[0]) * product;
-    return sum;
+    return fromRadix(digitsInts);
   }
 
   /**
