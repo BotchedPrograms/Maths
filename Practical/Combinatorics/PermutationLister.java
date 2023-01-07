@@ -84,18 +84,16 @@ public class PermutationLister {
    */
   public int[][] getPermutations(int r) {
     int[][] perms = new int[permutation(arr.length, r)][r];
-    StringBuilder sb = new StringBuilder();
-    for (int i = arr.length; i > arr.length - r; i--) {
-      sb.append(i);
-      sb.append(" ");
+    int[] radices = new int[r];
+    for (int i = 0; i < r; i++) {
+      radices[i] = arr.length - i;
     }
-    MixedRadix mr = new MixedRadix(sb.toString());
+    MixedRadix mr = new MixedRadix(radices);
     for (int i = 0; i < mr.getRadicesProduct(); i++) {
       ArrayList<Integer> al = getArrList();
-      String line = mr.toRadix(i).substring(2);
-      String[] digits = line.split(" ");
+      int[] digits = mr.toRadix(i);
       for (int j = 0; j < r; j++) {
-        perms[i][j] = al.remove(Integer.parseInt(digits[j]));
+        perms[i][j] = al.remove(digits[j + 1]);
       }
     }
     return perms;
@@ -131,22 +129,20 @@ public class PermutationLister {
 
   /*
   How to get all the permutations of 2, 3, 4, 5?
-  Let's say we want the permutation 3, 4, 2, 5.
+  Let's say we have the permutation 3, 4, 2, 5.
   One way we can think about this is taking the element at index 1 (3)
-    Then removing it from the possible digits, so they become 2, 4, 5
+    Then removing it from the possible digits to get 3, 2, 5
   Then we take the next element at index 1 (4)
     Remove it from possible digits again
     Repeat for the remaining digits -- index 0 (2) and then index 0 (5)
-  With this process, we can turn any permutation into a unique combination of 0, 1, 2, 3 -- in this case 1, 1, 0, 0
+  With this, we can turn any permutation into a unique combination of 0, 1, 2, 3 -- in this case 1, 1, 0, 0
   How many possibilities are there? There are 4 digits possible for the first (ranging from 0 to 3),
     3 for the next (from 0 to 2), then 2 (from 0 to 1), and 1 (just 0).
   Thus, the number of possibilities is 4 x 3 x 2 x 1 = 4!
-  You notice something else cool though? There being 4 digits, then 3 digits, 2, and 1 is directly related to base-factorial
-    (where "base-factorial" is more formally known as the factorial number system)
+  You notice something else cool though? There being 4 digits, then 3 digits, 2, and 1 is directly related to base-factorial!
     It's covered in a different folder if you haven't seen it yet
     What this means is that the numbers from [0, 4!) translated to base-factorial, give us all the combinations we want!
     0 -> 0000, 1 -> 0010, 2 -> 0100, 3 -> 0110, 4 -> 0200, 5 -> 0210, 6 -> 1000, 7 -> 1010, etc.
     See, I told you it was practical ;)
-  Edit: The current version of the program uses MixedRadix instead of BaseFactorial but it's essentially the same idea
    */
 }
