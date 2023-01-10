@@ -138,9 +138,9 @@ public class MixedRadix {
    *   num % den in Java can be negative if num is negative. This is
    *   presumably because of how Java handles division, which is
    *   elaborated on in the description for euclideanDivision(). For
-   *   the purposes of this program however, we want it to always be
-   *   non-negative, so the program can process negative radices
-   *   and return non-negative digits.
+   *   the purposes of this program, we want it to always be non-negative,
+   *   so the program can process negative radices and return non-negative
+   *   digits (except for the first digit potentially).
    * </p>
    *
    * @param num the numerator (of a fraction or more formally,
@@ -293,11 +293,11 @@ public class MixedRadix {
 
   public static void main(String[] args) {
     MixedRadix mr = new MixedRadix("7 24 60");
-    System.out.println(mr.toRadix(10000));
+    print(mr.toRadix(10000));
     System.out.println(mr.fromRadix("0 6 22 40"));
     System.out.println();
     MixedRadix mr2 = new MixedRadix("-7 -7 -7 -7 -7 -7");
-    System.out.println(mr2.toRadix(15532));
+    print(mr2.toRadix(15532));
     System.out.println(mr2.fromRadix("1 6 0 4 2 1 6"));
     System.out.println(Math.floorDiv(43, 7));
     System.out.println(euclideanDivision(-43, 7));
