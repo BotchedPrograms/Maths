@@ -8,6 +8,15 @@ public class PermutationLister {
   private final int[] arr;
 
   /**
+   * Creates a PermutationLister from the provided int array.
+   *
+   * @param arr int array for PermutationLister
+   */
+  public PermutationLister(int[] arr) {
+    this.arr = arr;
+  }
+
+  /**
    * Creates a PermutationLister with ints 0 to length-1.
    *
    * @param length length of whole numbers for PermutationLister
@@ -21,66 +30,21 @@ public class PermutationLister {
   }
 
   /**
-   * Creates a PermutationLister with the provided int array.
+   * Returns a 2d int array representation of all permutations of arr (whose values are set
+   * in the Constructor).
    *
-   * @param arr int array for PermutationLister
-   */
-  public PermutationLister(int[] arr) {
-    this.arr = arr;
-  }
-
-  /**
-   * Returns the value of n!.
-   *
-   * @param n int whose factorial is returned.
-   * @return the value of n!
-   */
-  private static int factorial(int n) {
-    return permutation(n, n);
-  }
-
-  /**
-   * Returns the value of P(n,r).
-   *
-   * @param n the first half of P(n,r)
-   * @param r the second half of P(n,r)
-   * @return the value of P(n,r)
-   */
-  private static int permutation(int n, int r) {
-    int product = 1;
-    for (int i = n; i > n - r; i--) {
-      product *= i;
-    }
-    return product;
-  }
-
-  /**
-   * Returns the value of arr as an ArrayList.
-   *
-   * @return arr as an ArrayList
-   */
-  private ArrayList<Integer> getArrList() {
-    ArrayList<Integer> al = new ArrayList<>();
-    for (int num : arr) {
-      al.add(num);
-    }
-    return al;
-  }
-
-  /**
-   * Returns all permutations of arr (whose values are set in the Constructor).
-   *
-   * @return an int[][] representing all permutations of arr
+   * @return a 2d int array representing all permutations of arr
    */
   public int[][] getPermutations() {
     return getPermutations(arr.length);
   }
 
   /**
-   * Returns all r-length permutations of arr (whose values are set in the Constructor).
+   * Returns a 2d int array representation of all r-length permutations of arr (whose values
+   * are set in the Constructor).
    *
    * @param r length of the permutations
-   * @return all r-length permutations of arr
+   * @return a 2d int array of all r-length permutations of arr
    */
   public int[][] getPermutations(int r) {
     int[][] perms = new int[permutation(arr.length, r)][r];
@@ -100,26 +64,54 @@ public class PermutationLister {
   }
 
   /**
-   * Prints an int array.
+   * Returns the value of P(n,r).
    *
-   * @param nums int array to be printed
+   * @param n the first half of P(n,r)
+   * @param r the second half of P(n,r)
+   * @return the value of P(n,r)
    */
-  private static void print(int[] nums) {
-    for (int num : nums) {
-      System.out.print(num + " ");
+  private static int permutation(int n, int r) {
+    int product = 1;
+    for (int i = n; i > n - r; i--) {
+      product *= i;
     }
-    System.out.println();
+    return product;
+  }
+
+  /**
+   * Returns an ArrayList representation of arr.
+   *
+   * @return arr as an ArrayList
+   */
+  private ArrayList<Integer> getArrList() {
+    ArrayList<Integer> al = new ArrayList<>();
+    for (int num : arr) {
+      al.add(num);
+    }
+    return al;
   }
 
   /**
    * Prints a 2d int array.
    *
-   * @param numses 2d int array to be printed
+   * @param arrs 2d int array to be printed
    */
-  public static void print(int[][] numses) {
-    for (int[] nums : numses) {
-      print(nums);
+  public static void print(int[][] arrs) {
+    for (int[] arr : arrs) {
+      print(arr);
     }
+  }
+
+  /**
+   * Prints an int array.
+   *
+   * @param arr int array to be printed
+   */
+  private static void print(int[] arr) {
+    for (int num : arr) {
+      System.out.print(num + " ");
+    }
+    System.out.println();
   }
 
   public static void main(String[] args) {
