@@ -1,5 +1,3 @@
-import java.util.List;
-
 // The toitent function counts the number of non-relatively primes from 1 to n
 // For n = 12:
 // 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
@@ -12,11 +10,18 @@ import java.util.List;
 // 1           5     7            11          what's left is thus 12 * (1 - 1/2) * (1 - 1/3) = 4
 // Made by Euler (b/c of course) and is used in number theory and encryption
 
+import java.util.List;
+
 public class Totient {
     public static long totient(long num) {
         if (num < 1) {
-            return 0;
+            throw new IllegalArgumentException();
         }
+        // Method returns 1 without this, but included anyways
+        if (num == 1) {
+            return 1;
+        }
+        // Uses Euler's product formula, totient(n) = n * product of (1 - 1/p) for all unique primes p that divide n
         long product = num;
         List<Long> primeFactors = PrimeFactorization.factor(num);
         PrimeFactorization.removeDuplicates(primeFactors);
