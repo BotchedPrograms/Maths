@@ -1,6 +1,6 @@
 // As in Carmichael's Lambda function, which gives a number such that a^lambda(n) mod n = 1 (if a and n are coprime)
 // It's stronger than Euler's theorem, which has a^totient(n) mod n = 1 (if a and n are coprime)
-// If n = p1^k1 * p2^k2 * ..., lambda(n) where p1, p2, ... are prime factors of n,
+// If n = p1^k1 * p2^k2 * ... where p1, p2, ... are prime factors of n,
     // lambda(n) = lcm(totient(p1^k1), totient(p2^k2), ...)
 // Also there's the edge case where lambda(2^k) = 1/2 * totient(2^k) for k >= 3
     // a^lambda(n) mod n = 1 still holds for this case, for reasons I no longer understand
