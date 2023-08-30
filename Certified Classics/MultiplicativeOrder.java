@@ -1,6 +1,5 @@
 // Note that when m is used as a parameter, the method has to do with something modulo m
 // Mathematical explanations and other stuff at the bottom
-// Go to Maths/Interesting/Number Theory/ to find the other classes used here
 
 public class MultiplicativeOrder {
     // Returns the smallest positive int k such that a^k mod m = 1
@@ -51,7 +50,7 @@ public class MultiplicativeOrder {
         // 6x = 857142
         // Note that these are all the same sequence of letters but starting at a different digit, so 142857 is cyclic
     private static boolean isCyclic(long n, long base) {
-        if (n <= 0) {
+        if (n <= 2) {
             throw new IllegalArgumentException();
         }
         if (LCMandGCF.gcf(n, base) != 1) {
@@ -84,7 +83,7 @@ public class MultiplicativeOrder {
         }
 
         System.out.println();
-        for (int i = 1; i < 1000; i++) {
+        for (int i = 3; i < 1000; i++) {
             if (isCyclic(i, 10)) {
                 System.out.print(i + ", ");
             }
@@ -133,21 +132,31 @@ Explanations for isCyclic(n, base)
     Which corresponds with b^i mod n having unique values for i from 0 to n-2
         (those unique values being an int from 1 to n-1)
 
-    As fun as it may be to contemplate if 1/1 base anything yields a cyclic number, let's now assume n > 1.
+    As fun as it may be to contemplate if 1/1 or 1/2 base anything yields a cyclic number, let's now assume n > 2
 
     (I) If gcf(n, b) != 1, 1/n base b isn't cyclic
     If g = gcf(n, b) != 1
-        Let b^k = cn + h where k is a positive int, c is an int, and 0 <= h < n
+        Let b^k = cn + h where c, h, and k are ints; k > 0; and 0 <= h < n
         Thus, b^k == cn + h (mod g)
         Thus, 0 == h (mod g)
         Thus, h != g-1 (since g != 1)
         Thus, b^k == h != g-1 (mod n)
-        2 <= g <= n ==> 1 <= g-1 <= n-1
-        Thus, the division 1/n base b doesn't go through the int g-1 which is in between 1 and n-1 inclusive
+        Thus, b^k == g-1 (mod n) has no solutions for k > 0
+        If k = 0 is not a solution as well
+            b^k == g-1 (mod n) has no solutions for k >= 0
+            2 <= g <= n ==> 1 <= g-1 <= n-1
+            Thus, there is no int k >= 0 such that b^k == g-1 (mod n) where g-1 is in between 1 and n-1 inclusive
+        Otherwise (if k = 0 is a solution)
+            b^k == 1 == g-1 (mod n) and g-1 < n ==> g = 2 
+            n > 2 and g = 2 ==> n >= 4 ==> n-1 >= 3 >= 1
+            Consider b^k == 3 (mod n)
+                This has no solutions for k > 0 similar to how b^k == g-1 (mod n) didn't
+                k = 0 isn't a solution since b^k == 1 !== 3 (mod n)
+            Thus, there is no int k >= 0 such that b^k == 3 (mod n) where 3 is in between 1 and n-1 inclusive
         Thus, 1/n base b isn't cyclic
 
-    (II) If there is an x such that 0 < x < n-1 and b^x == 1 (mod n), 1/n base b doesn't yield a cyclic number
-    If there is an x such that 0 < x < n-1 and b^x == 1 (mod n)
+    (II) If there is an int x such that 0 < x < n-1 and b^x == 1 (mod n), 1/n base b doesn't yield a cyclic number
+    If there is an int x such that 0 < x < n-1 and b^x == 1 (mod n)
         b^x == b^0 == 1 (mod n)
         Thus, b^i mod n doesn't have unique values for i from 0 to n-2
         Thus, 1/n base b doesn't yield a cyclic number
