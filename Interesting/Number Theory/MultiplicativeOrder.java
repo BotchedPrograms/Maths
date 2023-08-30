@@ -3,7 +3,7 @@
 
 public class MultiplicativeOrder {
     // Returns the smallest positive int k such that a^k mod m = 1
-    // Gets by finding factors of lambda and seeing if a^factor mod m = 1
+        // Gets by finding factors of lambda and seeing if a^factor mod m = 1
     public static long order(long a, long m) {
         if (LCMandGCF.gcf(a, m) != 1) {
             return -1;
@@ -35,20 +35,20 @@ public class MultiplicativeOrder {
     // Corollaries I didn't feel like putting somewhere else
 
     // Returns true iff a is a primitive root mod m, that is if order(a, m) == totient(m)
-    // That's just a definition of a primitive root
+        // That's just a definition of a primitive root
     private static boolean primitiveRoot(long a, long m) {
         return order(a, m) == Totient.totient(m);
     }
 
     // Returns true iff floor(1/n * 10^(n-1)) gives a cyclic number
     // For example, isCyclic(7, 10) is true
-    // x = floor(1/7 * 10^6) = 142857
-    // 2x = 285714
-    // 3x = 428571
-    // 4x = 571428
-    // 5x = 714285
-    // 6x = 857142
-    // Note that these are all the same sequence of letters but starting at a different digit, so 142857 is cyclic
+        // x = floor(1/7 * 10^6) = 142857
+        // 2x = 285714
+        // 3x = 428571
+        // 4x = 571428
+        // 5x = 714285
+        // 6x = 857142
+        // Note that these are all the same sequence of letters but starting at a different digit, so 142857 is cyclic
     private static boolean isCyclic(long n, long base) {
         if (n <= 0) {
             throw new IllegalArgumentException();
