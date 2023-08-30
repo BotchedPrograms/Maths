@@ -24,6 +24,10 @@ public class NumberOfFactors {
         return product;
     }
 
+    public static boolean isPrime(long num) {
+        return PrimeFactorization.factor(num).size() == 1;
+    }
+
     public static long[] getFactors(long num) {
         List<Long> primeFactors = PrimeFactorization.factor(num);
         // Powers of prime factors
