@@ -1,5 +1,6 @@
 // Note that when m is used as a parameter, the method has to do with something modulo m
 // Mathematical explanations and other stuff at the bottom
+// Go to Maths/Interesting/Number Theory/ to find the other classes used here
 
 public class MultiplicativeOrder {
     // Returns the smallest positive int k such that a^k mod m = 1
