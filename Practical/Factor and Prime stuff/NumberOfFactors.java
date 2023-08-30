@@ -35,27 +35,27 @@ public class NumberOfFactors {
         for (Integer power : powers) {
             product *= power + 1;
         }
-        int[] indexes;
+        int[] indices;
         int tempI;
         long[] factors = new long[product];
         int index;
         for (int i = 0; i < product; i++) {
             // Made to not change i while working with the value
             tempI = i;
-            // Every indexes is a combination of powers
-            // If num = 60, indexes would be [0, 0, 0], [1, 0, 0], [2, 0, 0], [0, 1, 0], ...
+            // Every indices is a combination of powers
+            // If num = 60, indices would be [0, 0, 0], [1, 0, 0], [2, 0, 0], [0, 1, 0], ...
             // Goes through all combinations of, in this case, of 2s, 3s, and 5s
-            indexes = new int[powers.size()];
+            indices = new int[powers.size()];
             factors[i] = 1;
             index = 0;
             for (int j = 0; j < powers.size(); j++) {
                 // The thing that makes the combinations
                 // Hard to make, harder to explain
                 // or maybe im just too tired rn, honest possibility. ima go nap
-                indexes[j] = tempI % (powers.get(j) + 1);
+                indices[j] = tempI % (powers.get(j) + 1);
                 tempI /= powers.get(j) + 1;
                 // Factors[i] *= prime factor and number of it in aforementioned combination
-                factors[i] *= Math.pow(primeFactors.get(index), indexes[j]);
+                factors[i] *= pow(primeFactors.get(index), indices[j]);
                 index += powers.get(j);
             }
         }
@@ -81,6 +81,19 @@ public class NumberOfFactors {
     public static List<Integer> getPowers(long num) {
         List<Long> factors = PrimeFactorization.factor(num);
         return getPowers(factors);
+    }
+
+    // Returns a^b
+    private static long pow(long a, int b) {
+        if (b == 0) {
+            return 1;
+        }
+        long smallPow = pow(a, b / 2);
+        // should never be negative, but included to terminate if it happens
+        if (b % 2 <= 0) {
+            return smallPow * smallPow;
+        }
+        return a * smallPow * smallPow;
     }
 
     private static void print(long num) {
