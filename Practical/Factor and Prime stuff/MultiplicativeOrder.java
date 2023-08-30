@@ -1,5 +1,3 @@
-import java.util.List;
-
 // Note that when m is used as a parameter, the method has to do with something modulo m
 // Mathematical explanations and other stuff at the bottom
 
@@ -58,8 +56,7 @@ public class MultiplicativeOrder {
         if (LCMandGCF.gcf(n, base) != 1) {
             return false;
         }
-        List<Long> primes = PrimeFactorization.factor(n);
-        if (primes.size() > 1) {
+        if (!NumberOfFactors.isPrime(n)) {
             return false;
         }
         return order(base, n) == n - 1;
