@@ -136,26 +136,27 @@ Explanations for isCyclic(n, base)
 
     (I) If gcf(n, b) != 1, 1/n base b isn't cyclic
     If g = gcf(n, b) != 1
-        Let b^k = cn + h where k is a positive int, c is an int, and 0 <= h < n
+        Let b^k = cn + h where c, h, and k are ints; k > 0; and 0 <= h < n
         Thus, b^k == cn + h (mod g)
         Thus, 0 == h (mod g)
         Thus, h != g-1 (since g != 1)
         Thus, b^k == h != g-1 (mod n)
+        Thus, b^k == g-1 (mod n) has no solutions for k > 0
         If k = 0 is not a solution as well
-            b^k == g-1 has no solutions for k >= 0
+            b^k == g-1 (mod n) has no solutions for k >= 0
             2 <= g <= n ==> 1 <= g-1 <= n-1
             Thus, there is no int k >= 0 such that b^k == g-1 (mod n) where g-1 is in between 1 and n-1 inclusive
         Otherwise (if k = 0 is a solution)
             b^k == 1 == g-1 (mod n) and g-1 < n ==> g = 2 
             n > 2 and g = 2 ==> n >= 4 ==> n-1 >= 3 >= 1
             Consider b^k == 3 (mod n)
-                k > 0 has no solutions for the same reason b^k == g-1 (mod n) didn't
-                k == 0 isn't a solution since b^k == 1 !== 3 (mod n)
+                This has no solutions for k > 0 similar to how b^k == g-1 (mod n) didn't
+                k = 0 isn't a solution since b^k == 1 !== 3 (mod n)
             Thus, there is no int k >= 0 such that b^k == 3 (mod n) where 3 is in between 1 and n-1 inclusive
         Thus, 1/n base b isn't cyclic
 
-    (II) If there is an x such that 0 < x < n-1 and b^x == 1 (mod n), 1/n base b doesn't yield a cyclic number
-    If there is an x such that 0 < x < n-1 and b^x == 1 (mod n)
+    (II) If there is an int x such that 0 < x < n-1 and b^x == 1 (mod n), 1/n base b doesn't yield a cyclic number
+    If there is an int x such that 0 < x < n-1 and b^x == 1 (mod n)
         b^x == b^0 == 1 (mod n)
         Thus, b^i mod n doesn't have unique values for i from 0 to n-2
         Thus, 1/n base b doesn't yield a cyclic number
