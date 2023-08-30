@@ -221,21 +221,22 @@ Explanations for isCyclic(n, base)
         Thus, the division 1/n base b doesn't go through the int g-1 which is in between 1 and n-1 inclusive
         Thus, 1/n base b isn't cyclic
 
-    (II) If there is an x < n-1 such that b^x == 1 (mod n), 1/n base b doesn't yield a cyclic number
-    If there is an x < n-1 such that b^x == 1 (mod n)
+    (II) If there is an x such that 0 < x < n-1 and b^x == 1 (mod n), 1/n base b doesn't yield a cyclic number
+    If there is an x such that 0 < x < n-1 and b^x == 1 (mod n)
         b^x == b^0 == 1 (mod n)
         Thus, b^i mod n doesn't have unique values for i from 0 to n-2
         Thus, 1/n base b doesn't yield a cyclic number
 
     (III) If n is not prime, 1/n base b doesn't yield a cyclic number
-    Recall that totient(n) is the number of relatively prime numbers from 1 to n
-    If n is not prime, it has >1 factor (recall that n > 1)
-        Note that for all factors f of n, they share a factor, namely f
-        Thus, since n has >1 factor, totient(n) < n-1
     If gcf(n, b) != 1
         1/n base b isn't cyclic (by (I))
     Otherwise
-        There is an x = totient(n) < n-1 such that b^x == 1 (mod n)
+        Recall that totient(n) is the number of relatively prime numbers from 1 to n
+        1 is considered relatively prime to n, so totient(n) >= 1 > 0
+        If n is not prime, it has >1 factor (recall that n > 1)
+            Note that for all factors f of n, they share a factor, namely f
+            Thus, since n has >1 factor, totient(n) < n-1
+        Thus, there is an x such that 0 < x = totient(n) < n-1 and b^x == 1 (mod n)
         1/n base b doesn't yield a cyclic number (by (II))
 
     The last thing we want to show is that 1/n base b yields a cyclic number iff order(b, n) = n-1
@@ -245,7 +246,7 @@ Explanations for isCyclic(n, base)
         By the contrapositive of (II), if it yields a cyclic number, there is no x < n-1 such that b^x == 1 (mod n)
         By the contrapositive of (III), if it yields a cyclic number, n is prime
             Which tells us totient(n) = n-1
-        Altogether, we find that totient(n) = n-1 is the smallest int k such that b^k == 1 (mod n)
+        Altogether, we find that totient(n) = n-1 is the smallest positive int k such that b^k == 1 (mod n)
         Thus, order(b, n) = n-1
     (<==) order(b, n) = n-1 ==> 1/n base b yields a cyclic number
         Assume for contradiction that there is x and y such that 0 <= x < y <= n-2 and b^x == b^y (mod n)
@@ -265,7 +266,7 @@ Explanations for isCyclic(n, base)
     Which completes the proof. Fucking finally.
 
 Addressing known abuses of notation I've used
-    order(a, m) is usually written as order_m(a) or other things
+    order(a, m) is usually written as ord_m(a) or other things
     "isCyclic" is wrong since 1/7 in base 10 isn't considered cyclic, its repeating digits 142857 is
     When I've said a^k mod m = 1, it's usually formally written as a^k is congruent to 1 modulo m
         They're the same thing for all m > 1. If you want to be a smart-ass, yes, they are different for m = 1.
