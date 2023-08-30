@@ -1,96 +1,23 @@
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 // Note that when m is used as a parameter, the method has to do with something modulo m
 // Mathematical explanations and other stuff at the bottom
 
 public class MultiplicativeOrder {
     // Returns the smallest positive int k such that a^k mod m = 1
-        // Gets by finding factors of lambda and seeing if a^factor mod m = 1
+    // Gets by finding factors of lambda and seeing if a^factor mod m = 1
     public static long order(long a, long m) {
         if (LCMandGCF.gcf(a, m) != 1) {
             return -1;
         }
         long lambda = Lambda.lambda(m);
-
-        // Just getting factors of lambda
-            // By far the most optimizable part of this code
-            // Uses MixedRadix class from Combinatorics folder
-        Map<Long, Integer> primeFactors = PrimeFactorization.factorAsMap(lambda);
-        MixedRadix mr = new MixedRadix();
-        List<Long> uniquePrimes = new LinkedList<>(primeFactors.keySet());
-        binarySort(uniquePrimes);
-        for (Long uniquePrime : uniquePrimes) {
-            mr.addRadix(primeFactors.get(uniquePrime) + 1);
-        }
-        List<Long> factors = new LinkedList<>();
-        // -1 in mr.getRadicesProduct() - 1 there to not check lambda which is known to work
-        for (int i = 0; i < mr.getRadicesProduct() - 1; i++) {
-            int[] powers = mr.toRadix(i);
-            long product = 1;
-            for (int j = 1; j < powers.length; j++) {
-                product *= pow(uniquePrimes.get(j - 1), powers[j]);
-            }
-            factors.add(product);
-        }
-        binarySort(factors);
-
-        for (Long factor : factors) {
+        long[] factors = NumberOfFactors.getFactors(lambda);
+        for (long factor : factors) {
             if (pow(a, factor, m) == 1) {
                 return factor;
             }
         }
         return lambda;
-    }
-
-    private static void binarySort(List<Long> nums) {
-        binarySort(nums, 0, nums.size());
-    }
-
-    private static void binarySort(List<Long> nums, int lo, int hi) {
-        if (lo >= hi) {
-            return;
-        }
-        if (lo == hi - 1) {
-            if (nums.get(lo) < nums.get(hi - 1)) {
-                long sub = nums.get(lo);
-                nums.set(lo, nums.get(hi - 1));
-                nums.set(hi - 1, sub);
-            }
-            return;
-        }
-        int mid = (lo + hi) / 2;
-        binarySort(nums, lo, mid);
-        binarySort(nums, mid, hi);
-        List<Long> newArr = new LinkedList<>();
-        int left = lo;
-        int right = mid;
-        for (int i = 0; i < hi - lo; i++) {
-            if (right == hi || (left < mid && nums.get(left) < nums.get(right))) {
-                newArr.add(nums.get(left));
-                left++;
-            } else {
-                newArr.add(nums.get(right));
-                right++;
-            }
-        }
-        for (int i = lo; i < hi; i++) {
-            nums.set(i, newArr.get(i - lo));
-        }
-    }
-
-    // Returns a^b
-    private static long pow(long a, int b) {
-        if (b == 0) {
-            return 1;
-        }
-        long smallPow = pow(a, b / 2);
-        // should never be negative, but included to terminate if it happens
-        if (b % 2 <= 0) {
-            return smallPow * smallPow;
-        }
-        return a * smallPow * smallPow;
     }
 
     // Returns a^b % mod
@@ -110,20 +37,20 @@ public class MultiplicativeOrder {
     // Corollaries I didn't feel like putting somewhere else
 
     // Returns true iff a is a primitive root mod m, that is if order(a, m) == totient(m)
-        // That's just a definition of a primitive root
+    // That's just a definition of a primitive root
     private static boolean primitiveRoot(long a, long m) {
         return order(a, m) == Totient.totient(m);
     }
 
     // Returns true iff floor(1/n * 10^(n-1)) gives a cyclic number
-        // For example, isCyclic(7, 10) is true
-        // x = floor(1/7 * 10^6) = 142857
-        // 2x = 285714
-        // 3x = 428571
-        // 4x = 571428
-        // 5x = 714285
-        // 6x = 857142
-        // Note that these are all the same sequence of letters but starting at a different digit, so 142857 is cyclic
+    // For example, isCyclic(7, 10) is true
+    // x = floor(1/7 * 10^6) = 142857
+    // 2x = 285714
+    // 3x = 428571
+    // 4x = 571428
+    // 5x = 714285
+    // 6x = 857142
+    // Note that these are all the same sequence of letters but starting at a different digit, so 142857 is cyclic
     private static boolean isCyclic(long n, long base) {
         if (n <= 0) {
             throw new IllegalArgumentException();
