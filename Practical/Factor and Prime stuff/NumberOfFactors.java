@@ -6,8 +6,8 @@ import java.util.Scanner;
 // 60 has 12 factors: 1, 2, 3, 4, 5, 6, 10, 12, 15, 20, 30, and 60
 // 60 = 2^2 * 3 * 5
 // Each factor of 60 is a unique combination of 2^0, 2^1, 2^2 ; 3^0, 3^1 ; and 5^0, 5^1
-// The number of unique combinations for 60 is 3 x 2 x 2 = 12
-// i.e. Number of factors = product of (powers + 1)
+    // The number of unique combinations for 60 is 3 x 2 x 2 = 12
+    // i.e. Number of factors = product of (powers + 1)
 // Also, the getFactors method here returns a long[] of those factors
 // Not mentioned in file name b/c wasn't sure what it would be called
     // Factors feels too short, Factorization might just be wrong,
