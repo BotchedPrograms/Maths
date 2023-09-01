@@ -10,7 +10,9 @@ public class MultiplicativeOrder {
         }
         long lambda = Lambda.lambda(m);
         long[] factors = NumberOfFactors.getFactors(lambda);
-        for (long factor : factors) {
+        // -1 to not need to check lambda itself since it's guaranteed to work
+        for (int i = 0; i < factors.length - 1; i++) {
+            long factor = factors[i];
             if (pow(a, factor, m) == 1) {
                 return factor;
             }
@@ -37,7 +39,13 @@ public class MultiplicativeOrder {
     // Returns true iff a is a primitive root mod m, that is if order(a, m) == totient(m)
         // That's just a definition of a primitive root
     private static boolean primitiveRoot(long a, long m) {
-        return order(a, m) == Totient.totient(m);
+        if (LCMandGCF.gcf(a, m) != 1) {
+            return false;
+        }
+        // modifiedOrder returns an int x such that a^x == 1 (mod m) and 0 < x < totient(m) if possible
+        // Thus, this returns true iff x = totient(m)
+        long totient = Totient.totient(m);
+        return modifiedOrder(a, m, totient) == totient;
     }
 
     // Returns true iff floor(1/n * 10^(n-1)) gives a cyclic number
@@ -59,7 +67,20 @@ public class MultiplicativeOrder {
         if (!NumberOfFactors.isPrime(n)) {
             return false;
         }
-        return order(base, n) == n - 1;
+        // Given that n is prime, lambda(n) = totient(n)
+        return modifiedOrder(base, n, n - 1) == n - 1;
+    }
+
+    // Doesn't return the multiplicative order, just an int x such that a^x == 1 (mod m)
+        // 0 < x < totient if such a value exists
+    private static long modifiedOrder(long a, long m, long totient) {
+        for (long primeFactor : PrimeFactorization.factorAsMap(totient).keySet()) {
+            long bigFactor = totient / primeFactor;
+            if (pow(a, bigFactor, m) == 1) {
+                return bigFactor;
+            }
+        }
+        return totient;
     }
 
     public static void main(String[] args) {
@@ -74,7 +95,7 @@ public class MultiplicativeOrder {
         System.out.println();
         for (int i = 1; i <= 31; i++) {
             System.out.print(i + ": ");
-            for (int j = 1; j < i; j++) {
+            for (int j = 0; j < i; j++) {
                 if (primitiveRoot(j, i)) {
                     System.out.print(j + " ");
                 }
@@ -82,12 +103,28 @@ public class MultiplicativeOrder {
             System.out.println();
         }
 
+        // 7, 17, 19, 23, 29, 47, 59, 61, 97, 109, 113, 131, 149, 167, 179, 181, 193, 223, 229, 233, 257, 263, 269, 313, 337, 367, 379, 383, 389, 419, 433, 461, 487, 491, 499, 503, 509, 541, 571, 577, 593, 619, 647, 659, 701, 709, 727, 743, 811, 821, 823, 857, 863, 887, 937, 941, 953, 971, 977, 983
         System.out.println();
         for (int i = 3; i < 1000; i++) {
             if (isCyclic(i, 10)) {
                 System.out.print(i + ", ");
             }
         }
+        // 3, 5, 17, 47, 59, 89, 97, 113, 127, 131, 137, 149, 167, 179, 181, 223, 229, 281, 293, 307, 311, 337, 347, 389, 401, 421, 433, 439, 443, 457, 487, 491, 499, 521, 547, 557, 569, 587, 599, 607, 617, 641, 647, 661, 677, 683, 709, 719, 733, 739, 769, 773, 797, 811, 823, 863, 881, 883, 887, 947, 953, 977, 991
+        System.out.println();
+        for (int i = 3; i < 1000; i++) {
+            if (isCyclic(i, 23)) {
+                System.out.print(i + ", ");
+            }
+        }
+        // 5, 23, 31, 37, 59, 71, 73, 83, 101, 109, 137, 163, 173, 191, 223, 227, 233, 239, 241, 251, 263, 269, 271, 281, 293, 331, 359, 367, 373, 379, 401, 409, 419, 431, 449, 461, 467, 499, 509, 563, 569, 587, 599, 601, 613, 617, 677, 727, 739, 757, 769, 773, 797, 809, 863, 877, 883, 907, 911, 937, 971, 977
+        System.out.println();
+        for (int i = 3; i < 1000; i++) {
+            if (isCyclic(i, 42)) {
+                System.out.print(i + ", ");
+            }
+        }
+        System.out.println();
     }
 }
 
@@ -105,7 +142,7 @@ Why only need to check factors of lambda for multiplicative orders
 
 Explanations for isCyclic(n, base)
     Observe what happens when we divide 1 by 7
-      -----------------------------
+      --------------------------------
     7 | 1.000000 <---------- 1
         - 7
         ---
@@ -147,7 +184,7 @@ Explanations for isCyclic(n, base)
             2 <= g <= n ==> 1 <= g-1 <= n-1
             Thus, there is no int k >= 0 such that b^k == g-1 (mod n) where g-1 is in between 1 and n-1 inclusive
         Otherwise (if k = 0 is a solution)
-            b^k == 1 == g-1 (mod n) and g-1 < n ==> g = 2 
+            b^k == 1 == g-1 (mod n) and g-1 < n ==> g = 2
             n > 2 and g = 2 ==> n >= 4 ==> n-1 >= 3 >= 1
             Consider b^k == 3 (mod n)
                 This has no solutions for k > 0 similar to how b^k == g-1 (mod n) didn't
@@ -180,6 +217,7 @@ Explanations for isCyclic(n, base)
         By the contrapositive of (II), if it yields a cyclic number, there is no x < n-1 such that b^x == 1 (mod n)
         By the contrapositive of (III), if it yields a cyclic number, n is prime
             Which tells us totient(n) = n-1
+            Since all ints from 1 to m-1 are relatively prime to m but m isn't, almost by definition of m being prime
         Altogether, we find that totient(n) = n-1 is the smallest positive int k such that b^k == 1 (mod n)
         Thus, order(b, n) = n-1
     (<==) order(b, n) = n-1 ==> 1/n base b yields a cyclic number
@@ -198,6 +236,39 @@ Explanations for isCyclic(n, base)
         Thus, b^i mod n is unique for all i from 0 to n-2
         Thus, 1/n base b yields a cyclic number
     Which completes the proof. Fucking finally.
+    Shit there's more. Ahem.
+
+Explanations for modifiedOrder(a, m)
+    Made to optimize isCyclic
+    If the method has to check order(a, m), we know m is prime
+        lambda(m) = totient(m) = m-1
+        So we don't need to calculate lambda(m) the long way for this
+        We also know that gcf(a, m) != 1 ==> a^totient(m) == 1 (mod m)
+    As shown earlier, we only need to check the factors of m-1 to find the multiplicative order
+    Here though, we're not interested in the smallest int x such that a^x == 1 (mod m) but if there is an x < m-1
+    Checking every factor is a bit wasteful since we know a^(kx) !== 1 (mod m) guarantees that a^x == 1 (mod m)
+        Since, by the contrapositive, if a^x == 1 (mod m), a^(kx) = (a^x)^k == 1^k == 1 (mod m)
+    Intuitively, we then only need to check the factors that are close to but not exactly m-1
+        We don't check m-1 since we already know a^totient(m) = a^(m-1) == 1 (mod m)
+    In particular, we only need to check all factors in the form of (m-1)/prime factor
+    Proof: Let m-1 = p1^k1 * p2^k2 * p3^k3 * ... * pl^kl
+        Addressing notable edge cases
+            l can be 1 if m = 3 and this still works
+            Don't have to worry about possibly weird case m-1 = 1 since m = n > 2
+        We want to show that every factor of m-1 besides itself divides (m-1)/pi for some int i from 1 to l
+            Where a divides b iff b is divisible by a. It's just another way of saying it
+        Assume for contradiction there is a factor f' of m-1 such that f' != m-1 doesn't divide (m-1)/pi for all i
+            Every factor f of m-1 can be written in the form of p1^n1 * p2^n2 * p3^n2 * ... * pl^nl
+                Where ni is some int from 0 to ki
+            Let f1 = p1^x1 * p2^x2 * ... pl^xl, and let f2 = p1^y1 * p2^y2 * ... * pl^yl
+            f1 does not divide f2 iff xi > yi for some i
+            Let f' = p1^n1 * p2^n2 * p3^n2 * ... * pl^nl
+            Note that (m-1)/pi = p1^k1 * p2^k2 * ... * pi^(ki-1) * ... * pl^kl
+            nj <= kj for all j != i, so (m-1)/pi does not divide f' iff ni > ki-1
+                ni <= ki, so ni = ki
+            We can do this for all i to find that f' = p1^n1 * p2^n2 * ... * pl^nl
+            Thus, f' = m-1, which is a contradiction
+        Which completes the proof
 
 Addressing known abuses of notation I've used
     order(a, m) is usually written as ord_m(a) or other things
