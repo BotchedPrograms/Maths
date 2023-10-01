@@ -1,23 +1,36 @@
 // Note that when m is used as a parameter, the method has to do with something modulo m
 // Mathematical explanations and other stuff at the bottom
 
+import java.util.Map;
+
 public class MultiplicativeOrder {
     // Returns the smallest positive int k such that a^k mod m = 1
-        // Gets by finding factors of lambda and seeing if a^factor mod m = 1
     public static long order(long a, long m) {
         if (LCMandGCF.gcf(a, m) != 1) {
             return -1;
         }
         long lambda = Lambda.lambda(m);
-        long[] factors = NumberOfFactors.getFactors(lambda);
-        // -1 to not need to check lambda itself since it's guaranteed to work
-        for (int i = 0; i < factors.length - 1; i++) {
-            long factor = factors[i];
-            if (pow(a, factor, m) == 1) {
-                return factor;
+        Map<Long, Integer> factorMap = PrimeFactorization.factorAsMap(lambda);
+        return checkFactor(a, m, lambda, factorMap);
+    }
+
+    // Checks if any of the factors f of the given factor of lambda satisfies a^f mod m = 1
+        // If so, recurses on f. Returns factor otherwise.
+        // Works for a similar reason modifiedOrder does
+    private static long checkFactor(long a, long m, long factor, Map<Long, Integer> factorMap) {
+        for (long primeFactor : factorMap.keySet()) {
+            long smallerFactor = factor / primeFactor;
+            if (pow(a, smallerFactor, m) == 1) {
+                Integer power = factorMap.get(primeFactor);
+                if (power == 1) {
+                    factorMap.remove(primeFactor);
+                } else {
+                    factorMap.put(primeFactor, power - 1);
+                }
+                return checkFactor(a, m, smallerFactor, factorMap);
             }
         }
-        return lambda;
+        return factor;
     }
 
     // Returns a^b % mod
