@@ -1,23 +1,36 @@
 // Note that when m is used as a parameter, the method has to do with something modulo m
 // Mathematical explanations and other stuff at the bottom
 
+import java.util.Map;
+
 public class MultiplicativeOrder {
     // Returns the smallest positive int k such that a^k mod m = 1
-        // Gets by finding factors of lambda and seeing if a^factor mod m = 1
     public static long order(long a, long m) {
         if (LCMandGCF.gcf(a, m) != 1) {
             return -1;
         }
         long lambda = Lambda.lambda(m);
-        long[] factors = NumberOfFactors.getFactors(lambda);
-        // -1 to not need to check lambda itself since it's guaranteed to work
-        for (int i = 0; i < factors.length - 1; i++) {
-            long factor = factors[i];
-            if (pow(a, factor, m) == 1) {
-                return factor;
+        Map<Long, Integer> factorMap = PrimeFactorization.factorAsMap(lambda);
+        return checkFactor(a, m, lambda, factorMap);
+    }
+
+    // Checks if any of the factors f of the given factor of lambda satisfies a^f mod m = 1
+        // If so, recurses on f. Returns factor otherwise.
+        // Works for a similar reason modifiedOrder does
+    private static long checkFactor(long a, long m, long factor, Map<Long, Integer> factorMap) {
+        for (long primeFactor : factorMap.keySet()) {
+            long smallerFactor = factor / primeFactor;
+            if (pow(a, smallerFactor, m) == 1) {
+                Integer power = factorMap.get(primeFactor);
+                if (power == 1) {
+                    factorMap.remove(primeFactor);
+                } else {
+                    factorMap.put(primeFactor, power - 1);
+                }
+                return checkFactor(a, m, smallerFactor, factorMap);
             }
         }
-        return lambda;
+        return factor;
     }
 
     // Returns a^b % mod
@@ -57,7 +70,7 @@ public class MultiplicativeOrder {
         // 5x = 714285
         // 6x = 857142
         // Note that these are all the same sequence of letters but starting at a different digit, so 142857 is cyclic
-    private static boolean isCyclic(long n, long base) {
+    public static boolean isCyclic(long n, long base) {
         if (n <= 2) {
             throw new IllegalArgumentException();
         }
@@ -165,13 +178,13 @@ Explanations for isCyclic(n, base)
     With this in mind, when we divide 2 by 7, we cycle through the same digits (1,3,2,6,4,5 repeat) but starting with 2
     All of 1/7, 2/7, 3/7, ..., 6/7 goes through the same digits since we cycle through all of 1,2,3,...,6
         For this reason, the repeating digits of 1/7 -- 142857 -- is said to be a cyclic number
-    More abstractly, 1/n base b yields a cyclic number if the division cycles through all ints from 1 to n-1
+    More abstractly, 1/n base b generates a cyclic number if the division cycles through all ints from 1 to n-1
     Which corresponds with b^i mod n having unique values for i from 0 to n-2
         (those unique values being an int from 1 to n-1)
 
-    As fun as it may be to contemplate if 1/1 or 1/2 base anything yields a cyclic number, let's now assume n > 2
+    As fun as it may be to contemplate if 1/1 or 1/2 base anything generates a cyclic number, let's now assume n > 2
 
-    (I) If gcf(n, b) != 1, 1/n base b isn't cyclic
+    (I) If gcf(n, b) != 1, 1/n base b doesn't generate a cyclic number
     If g = gcf(n, b) != 1
         Let b^k = cn + h where c, h, and k are ints; k > 0; and 0 <= h < n
         Thus, b^k == cn + h (mod g)
@@ -192,13 +205,13 @@ Explanations for isCyclic(n, base)
             Thus, there is no int k >= 0 such that b^k == 3 (mod n) where 3 is in between 1 and n-1 inclusive
         Thus, 1/n base b isn't cyclic
 
-    (II) If there is an int x such that 0 < x < n-1 and b^x == 1 (mod n), 1/n base b doesn't yield a cyclic number
+    (II) If there is an int x such that 0 < x < n-1 and b^x == 1 (mod n), 1/n base b doesn't generate a cyclic number
     If there is an int x such that 0 < x < n-1 and b^x == 1 (mod n)
         b^x == b^0 == 1 (mod n)
         Thus, b^i mod n doesn't have unique values for i from 0 to n-2
-        Thus, 1/n base b doesn't yield a cyclic number
+        Thus, 1/n base b doesn't generate a cyclic number
 
-    (III) If n is not prime, 1/n base b doesn't yield a cyclic number
+    (III) If n is not prime, 1/n base b doesn't generate a cyclic number
     If gcf(n, b) != 1
         1/n base b isn't cyclic (by (I))
     Otherwise
@@ -208,19 +221,19 @@ Explanations for isCyclic(n, base)
             Note that for all factors f of n, they share a factor, namely f
             Thus, since n has >1 factor, totient(n) < n-1
         Thus, there is an x such that 0 < x = totient(n) < n-1 and b^x == 1 (mod n)
-        1/n base b doesn't yield a cyclic number (by (II))
+        1/n base b doesn't generate a cyclic number (by (II))
 
-    The last thing we want to show is that 1/n base b yields a cyclic number iff order(b, n) = n-1
-    (==>) 1/n base b yields a cyclic number ==> order(b, n) = n-1
-        By the contrapositive of (I), if it yields a cyclic number, gcf(b, n) = 1
+    The last thing we want to show is that 1/n base b generates a cyclic number iff order(b, n) = n-1
+    (==>) 1/n base b generates a cyclic number ==> order(b, n) = n-1
+        By the contrapositive of (I), if it generates a cyclic number, gcf(b, n) = 1
             Which tells us b^totient(n) == 1 (mod n)
-        By the contrapositive of (II), if it yields a cyclic number, there is no x < n-1 such that b^x == 1 (mod n)
-        By the contrapositive of (III), if it yields a cyclic number, n is prime
+        By the contrapositive of (II), if it generates a cyclic number, b^x !== 1 (mod n) for all 0 < x < n-1
+        By the contrapositive of (III), if it generates a cyclic number, n is prime
             Which tells us totient(n) = n-1
             Since all ints from 1 to m-1 are relatively prime to m but m isn't, almost by definition of m being prime
         Altogether, we find that totient(n) = n-1 is the smallest positive int k such that b^k == 1 (mod n)
         Thus, order(b, n) = n-1
-    (<==) order(b, n) = n-1 ==> 1/n base b yields a cyclic number
+    (<==) order(b, n) = n-1 ==> 1/n base b generates a cyclic number
         Assume for contradiction that there is x and y such that 0 <= x < y <= n-2 and b^x == b^y (mod n)
             Since there is an int k such that b^k == 1 (mod n) (namely order(b,n)), there is a b^(-1)
                 Where b^(-1), the modular multiplicative inverse, is a number such that b * b^(-1) == 1 (mod n)
@@ -232,9 +245,9 @@ Explanations for isCyclic(n, base)
                 y > x ==> y-x > 0
                 x >= 0 ==> -x <= 0 ==> y-x <= y <= n-2
             Thus, there is an int k = y-x such that 0 < k <= n-2 < n-1 = order(b,n) and b^k == 1 (mod n)
-            Which contradicts how order(b, n) = n-1 is the smallest positive int such that b^(n-1) == 1 (mod n)
+            Which contradicts how order(b, n) = n-1 is the smallest positive int z such that b^z == 1 (mod n)
         Thus, b^i mod n is unique for all i from 0 to n-2
-        Thus, 1/n base b yields a cyclic number
+        Thus, 1/n base b generates a cyclic number
     Which completes the proof. Fucking finally.
     Shit there's more. Ahem.
 
