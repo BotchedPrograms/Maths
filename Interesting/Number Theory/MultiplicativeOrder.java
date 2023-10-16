@@ -217,9 +217,9 @@ Explanations for isCyclic(n, base)
     Otherwise
         Recall that totient(n) is the number of relatively prime numbers from 1 to n
         1 is considered relatively prime to n, so totient(n) >= 1 > 0
-        If n is not prime, it has >1 factor (recall that n > 1)
-            Note that for all factors f of n, they share a factor, namely f
-            Thus, since n has >1 factor, totient(n) < n-1
+        If n is not prime, n has >1 factor less than n (note that we don't deal with the edge case 1 since n > 2)
+            Note that for all such factors f, f and n share a factor, namely f
+            Thus, since n has >1 factor less than n, totient(n) < n-1
         Thus, there is an x such that 0 < x = totient(n) < n-1 and b^x == 1 (mod n)
         1/n base b doesn't generate a cyclic number (by (II))
 
