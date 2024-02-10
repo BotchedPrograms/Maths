@@ -1,16 +1,32 @@
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 // Assumes inputs are rectangular arrays
 public class Matrix {
-    double[][] mat;
+    private final double[][] mat;
 
+    /**
+     * Constructs a Matrix with the given 2D double array
+     * Assumes the given array is rectangular
+     */
     public Matrix(double[][] mat) {
         this.mat = mat;
     }
 
+    // Used for lambda stuff
     private interface Function {
         double func(double num1, double num2);
+    }
+
+    // Used to store two objects simultaneously
+    private static class Tuple<T1,T2> {
+        T1 thing1;
+        T2 thing2;
+        private Tuple(T1 thing1, T2 thing2) {
+            this.thing1 = thing1;
+            this.thing2 = thing2;
+        }
     }
 
     // If this = a, other = b, returned matrix = c, and function = f, c[i][j] = f(a[i][j], b[i][j]) for all i,j
@@ -29,16 +45,25 @@ public class Matrix {
         return new Matrix(answer);
     }
 
+    /**
+     * Returns the sum of this Matrix and a given Matrix
+     */
     public Matrix add(double[][] other) {
         Function add = Double::sum;
         return iterate(other, add);
     }
 
+    /**
+     * Returns the difference between this Matrix and a given Matrix
+     */
     public Matrix subtract(double[][] other) {
         Function subtract = (num1, num2) -> num1 - num2;
         return iterate(other, subtract);
     }
 
+    /**
+     * Returns the product of this Matrix multiplied by a given scalar
+     */
     public Matrix multiply(double scalar) {
         int rows = mat.length;
         int cols = mat[0].length;
@@ -60,16 +85,42 @@ public class Matrix {
         return sum;
     }
 
+    /**
+     * Returns the Matrix product of this Matrix multiplied to the right by a given Matrix
+     */
     public Matrix multiply(Matrix other) {
         if (mat[0].length != other.mat.length) {
             throw new IllegalArgumentException();
         }
         int rows = mat.length;
-        int cols = mat[0].length;
-        double[][] answer = new double[rows][other.mat[0].length];
+        int cols = other.mat[0].length;
+        double[][] answer = new double[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 answer[i][j] = dotRowCol(mat, i, other.mat, j);
+            }
+        }
+        return new Matrix(answer);
+    }
+
+    // Multiplies other to the right of this, given the indices where this has nonzero elements
+    private Matrix multiply(Matrix other, List<Integer> nonZeroIndices) {
+        if (mat[0].length != other.mat.length) {
+            throw new IllegalArgumentException();
+        }
+        int rows = mat.length;
+        int thisCols = mat[0].length;
+        int otherCols = other.mat[0].length;
+        double[][] answer = new double[rows][otherCols];
+        int nonZeroIndex = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < otherCols; j++) {
+                double sum = 0;
+                for (; nonZeroIndex < nonZeroIndices.size() && nonZeroIndices.get(nonZeroIndex) / thisCols <= i;
+                     nonZeroIndex++) {
+                    sum += mat[i][nonZeroIndex % thisCols] * other.mat[nonZeroIndex % thisCols][j];
+                }
+                answer[i][j] = sum;
             }
         }
         return new Matrix(answer);
@@ -84,7 +135,21 @@ public class Matrix {
         return sum;
     }
 
-    // Returns set of orthonormal vectors that has the same span as the column vectors of mat
+    // Normalizes a given column of a given matrix
+    private static void normalizeCol(double[][] mat, int col) {
+        double length = 0;
+        for (double[] rowVectors : mat) {
+            length += rowVectors[col] * rowVectors[col];
+        }
+        length = Math.sqrt(length);
+        for (int i = 0; i < mat.length; i++) {
+            mat[i][col] /= length;
+        }
+    }
+
+    /**
+     * Returns Matrix whose columns are orthonormal vectors with the same span as the columns of this Matrix
+     */
     public Matrix gramSchmidt() {
         int rows = mat.length;
         int cols = mat[0].length;
@@ -115,20 +180,14 @@ public class Matrix {
 
         // Normalizes column vectors
         for (int i = 0; i < cols; i++) {
-            double length = 0;
-            for (int j = 0; j < rows; j++) {
-                length += answer[j][i] * answer[j][i];
-            }
-            length = Math.sqrt(length);
-            if (!equals(length, 0)) {
-                for (int j = 0; j < rows; j++) {
-                    answer[j][i] /= length;
-                }
-            }
+            normalizeCol(answer, i);
         }
         return new Matrix(answer);
     }
 
+    /**
+     * Returns this Matrix's transpose
+     */
     public Matrix transpose() {
         int rows = mat.length;
         int cols = mat[0].length;
@@ -141,16 +200,19 @@ public class Matrix {
         return new Matrix(answer);
     }
 
+    // Returns true if two given doubles are practically equal
     private static boolean equals(double num, double target) {
         return Math.abs(num - target) < 0.000001;
     }
 
+    // Swaps row1 and row2 for mat
     private void swapRows(int row1, int row2) {
         double[] sub = mat[row1];
         mat[row1] = mat[row2];
         mat[row2] = sub;
     }
 
+    // Returns a copy of this Matrix
     private Matrix copy() {
         double[][] newMat = new double[mat.length][mat[0].length];
         for (int i = 0; i < mat.length; i++) {
@@ -159,19 +221,23 @@ public class Matrix {
         return new Matrix(newMat);
     }
 
-    private Matrix rrefHelper(int col, int rowToPlace) {
-        if (col == mat[0].length || rowToPlace == mat.length) {
-            return this;
+    // Reduces the matrix to rref while simultaneously calculating the determinant
+    private Tuple<Matrix, Double> rrefAndDetHelper(int col, int rowToPlace, double currDet) {
+        int rows = mat.length;
+        int cols = mat[0].length;
+        if (col == cols || rowToPlace == rows) {
+            return new Tuple<>(this, currDet);
         }
-        for (int i = rowToPlace; i < mat.length; i++) {
+        for (int i = rowToPlace; i < rows; i++) {
             double leadingDigit = mat[i][col];
             if (equals(leadingDigit, 0)) {
                 continue;
             }
-            for (int j = col; j < mat[0].length; j++) {
+            for (int j = col; j < cols; j++) {
                 mat[i][j] /= leadingDigit;
             }
-            for (int j = 0; j < mat.length; j++) {
+            currDet *= leadingDigit;
+            for (int j = 0; j < rows; j++) {
                 if (i == j) {
                     continue;
                 }
@@ -179,35 +245,49 @@ public class Matrix {
                 if (equals(otherLeading, 0)) {
                     continue;
                 }
-                for (int k = col; k < mat[0].length; k++) {
+                for (int k = col; k < cols; k++) {
                     mat[j][k] -= otherLeading * mat[i][k];
                 }
             }
-            swapRows(i, rowToPlace);
-            if (col == mat[0].length - 1 || rowToPlace == mat.length - 1) {
-                return this;
+            if (i != rowToPlace) {
+                swapRows(i, rowToPlace);
+                currDet *= -1;
             }
-            return rrefHelper(col + 1, rowToPlace + 1);
+            return rrefAndDetHelper(col + 1, rowToPlace + 1, currDet);
         }
-        return rrefHelper(col + 1, rowToPlace);
+        return rrefAndDetHelper(col + 1, rowToPlace, currDet);
     }
 
-    // Returns matrix in reduced row echelon form
+    /**
+     * Returns this Matrix's reduced row echelon form
+     */
     public Matrix rref() {
         Matrix copy = copy();
-        return copy.rrefHelper(0, 0);
+        return copy.rrefAndDetHelper(0, 0, 1).thing1;
     }
 
-    public int rank() {
-        Matrix rref = rref();
-        for (int i = mat.length - 1; i >= 0; i--) {
-            for (int j = i; j < mat[0].length; j++) {
-                if (!equals(rref.mat[i][j], 0)) {
-                    return i + 1;
-                }
-            }
+    /**
+     * Returns this Matrix's determinant
+     *
+     * @throws IllegalArgumentException if this Matrix isn't square
+     */
+    public double det() {
+        if (mat.length != mat[0].length) {
+            throw new IllegalArgumentException();
         }
-        return 0;
+        Matrix copy = copy();
+        double currDet = copy.rrefAndDetHelper(0, 0, 1).thing2;
+        if (equals(copy.mat[mat.length - 1][mat.length - 1], 0)) {
+            return 0.0;
+        }
+        return currDet;
+    }
+
+    /**
+     * Returns this Matrix's rank, the number of leading 1s when this Matrix is reduced
+     */
+    public int rank() {
+        return rank(rref());
     }
 
     private static int rank(Matrix rref) {
@@ -221,15 +301,22 @@ public class Matrix {
         return 0;
     }
 
-    // where mat is coeffs
+    /**
+     * Consider the equation Ax = y where A is this Matrix and y is product
+     * This prints out the possible solutions for x
+     *
+     * @throws IllegalArgumentException if A and product don't have the same length
+     */
     public void printSolutions(double[] product) {
         if (mat.length != product.length) {
             throw new IllegalArgumentException();
         }
-        double[][] appended = new double[mat.length][mat[0].length + 1];
-        for (int i = 0; i < mat.length; i++) {
-            System.arraycopy(mat[i], 0, appended[i], 0, mat[0].length);
-            appended[i][mat[0].length] = product[i];
+        int rows = mat.length;
+        int cols = mat[0].length;
+        double[][] appended = new double[rows][cols + 1];
+        for (int i = 0; i < rows; i++) {
+            System.arraycopy(mat[i], 0, appended[i], 0, cols);
+            appended[i][cols] = product[i];
         }
         Matrix rref = new Matrix(appended).rref();
         int rank = rank();
@@ -238,13 +325,13 @@ public class Matrix {
             return;
         }
         List<double[]> varColVectors = new LinkedList<>();
-        for (int i = 1; i < mat[0].length + 1; i++) {
-            for (int j = 0; j < i && j < mat.length; j++) {
+        for (int i = 1; i < cols + 1; i++) {
+            for (int j = 0; j < i && j < rows; j++) {
                 if (equals(rref.mat[j][i], 0) || equals(rref.mat[j][i], 1)) {
                     continue;
                 }
-                double[] column = new double[mat.length];
-                for (int k = 0; k < mat.length; k++) {
+                double[] column = new double[rows];
+                for (int k = 0; k < rows; k++) {
                     column[k] = rref.mat[k][i];
                 }
                 varColVectors.add(column);
@@ -259,24 +346,28 @@ public class Matrix {
             double[] column = varColVectors.get(i);
             System.out.printf("a_%d(", i);
             for (double v : column) {
-                System.out.printf("% .5f ", v);
+                System.out.printf("% .10f ", v);
             }
             System.out.println(") + ");
         }
         print(varColVectors.get(varColVectors.size() - 1));
     }
 
-    // Returns rref of this matrix appended by identity matrix if inverse exists, null otherwise
+    /**
+     * Returns this Matrix's inverse Matrix if it has one, null otherwise
+     */
     public Matrix inverse() {
         if (mat.length != mat[0].length) {
             return null;
         }
         int length = mat.length;
+        // Appends this matrix by the identity matrix
         double[][] appended = new double[length][2 * length];
         for (int i = 0; i < length; i++) {
             System.arraycopy(mat[i], 0, appended[i], 0, length);
             appended[i][length + i] = 1;
         }
+        // Finds rref of appended matrix and returns the transformed identity matrix
         Matrix rref = new Matrix(appended).rref();
         if (!equals(rref.mat[length - 1][length - 1], 1)) {
             return null;
@@ -288,10 +379,54 @@ public class Matrix {
         return new Matrix(answer);
     }
 
-    private void print() {
+    /**
+     * Returns this Matrix's largest eigenvalue
+     * Assumes this Matrix is diagonalizable
+     * Works well for matrices with most of its elements equal to zero
+     *
+     * @throws IllegalArgumentException if this Matrix is not square
+     */
+    // https://en.wikipedia.org/wiki/Power_iteration
+    public double powerIteration() {
+        if (mat.length != mat[0].length) {
+            throw new IllegalArgumentException();
+        }
+        int length = mat.length;
+        List<Integer> nonZeroIndices = new LinkedList<>();
+        for (int i = 0; i < length; i++) {
+            for (int j = 0; j < length; j++) {
+                if (!equals(mat[i][j], 0)) {
+                    nonZeroIndices.add(i * length + j);
+                }
+            }
+        }
+
+        Matrix bVector = new Matrix(new double[mat.length][1]);
+        Random rand = new Random();
+        for (int i = 0; i < mat.length; i++) {
+            bVector.mat[i][0] = rand.nextDouble();
+        }
+        normalizeCol(bVector.mat, 0);
+
+        // More iterations, more accuracy
+        int iterations = 100;
+        for (int i = 0; i < iterations; i++) {
+            bVector = multiply(bVector, nonZeroIndices);
+            normalizeCol(bVector.mat, 0);
+        }
+        Matrix nextBVector = multiply(bVector);
+        return dotColCol(nextBVector.mat, 0, bVector.mat, 0)
+            / dotColCol(bVector.mat, 0, bVector.mat, 0);
+    }
+
+    /**
+     * Prints this Matrix
+     */
+    public void print() {
         print(mat);
     }
 
+    // Prints out the given double array
     private static void print(double[] arr) {
         for (double v : arr) {
             System.out.printf("% .10f ", v);
@@ -299,6 +434,7 @@ public class Matrix {
         System.out.println();
     }
 
+    // Prints out the given 2d double array
     private static void print(double[][] arrs) {
         for (double[] arr : arrs) {
             print(arr);
@@ -319,8 +455,15 @@ public class Matrix {
             {3, 0, 3, 3, 3, 9, 0},
             {-6, 0, 4, 24, -1, 2, 0}
         });
-        example.rref().print();
-        example.inverse().print();
-        example.multiply(example.inverse()).print();
+        Matrix example3 = new Matrix(new double[][] {
+            {11, 899, 988, 199, 911},
+            {972, 53, 938, 843, 136},
+            {11, 919, 263, 177, 0},
+            {299, 792, 458, 998, 600},
+            {0, 867, 530, 9, 39}
+        });
+        System.out.println(example.det());
+        System.out.println(example3.det());
+        System.out.println(example.powerIteration());
     }
 }
