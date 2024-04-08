@@ -15,19 +15,18 @@ public class MultiplicativeOrder {
     }
 
     // Checks if any of the factors f of the given factor of lambda satisfies a^f mod m = 1
-        // If so, recurses on f. Returns factor otherwise.
+        // If so, updates factor to be f
         // Works for a similar reason modifiedOrder does
     private static long checkFactor(long a, long m, long factor, Map<Long, Integer> factorMap) {
-        for (long primeFactor : factorMap.keySet()) {
-            long smallerFactor = factor / primeFactor;
-            if (pow(a, smallerFactor, m) == 1) {
-                Integer power = factorMap.get(primeFactor);
-                if (power == 1) {
-                    factorMap.remove(primeFactor);
-                } else {
-                    factorMap.put(primeFactor, power - 1);
+        for (Map.Entry<Long, Integer> primePower : factorMap.entrySet()) {
+            long prime = primePower.getKey();
+            int power = primePower.getValue();
+
+            for (int i = 0; i < power; i++) {
+                if (pow(a, factor / prime, m) != 1) {
+                    break;
                 }
-                return checkFactor(a, m, smallerFactor, factorMap);
+                factor /= prime;
             }
         }
         return factor;
@@ -38,7 +37,7 @@ public class MultiplicativeOrder {
         if (b == 0) {
             return 1;
         }
-        long smallPow = pow(a, b / 2, mod) % mod;
+        long smallPow = pow(a, b / 2, mod);
         if (b % 2 == 0) {
             return (smallPow * smallPow) % mod;
         }
@@ -153,6 +152,46 @@ Why only need to check factors of lambda for multiplicative orders
     Thus, there is a positive int h < x such that a^h == 1 (mod m)
     Thus, x is not the multiplicative order
 
+Explanations for CheckFactor
+    In particular, how the way we avoid redundantly recursing the function on f
+    Let f = p1^n1 * p2^n2 * ... * pl^nl = the current value of factor. a^f == 1 (mod m) holds
+    Let o = p1^k1 * p2^k2 * ... * pl^kl = order(a, m). Note that kj is minimal and <= nj for all j
+    Let f' = p1^n1 * p2^n2 * ... * pi^xi * ... * pl^nl satisfy a^f' == 1 (mod m) with xi being minimal
+    We want to show that ki = xi
+    If xi > ki, let g = o * p1^(n1-k1) * p2^(n2-k2) * ... * pi^0 * ... * pl^(nl-kl) = o * q
+        g = p1^n1 * p2^n2 * ... * pi^ki * ... * pl^nl
+        a^o == 1 (mod m) ==> a^g = a^(o*q) = (a^o)^q == 1^q == 1 (mod m)
+        But a^f == 1 (mod m) too, so xi isn't minimal
+    If xi < ki, let h = gcf(f', o) = p1^k1 * p2^k2 * ... * pi^xi * ... * pl^kl
+        Let d1 = f'/h, and let d2 = o/h
+            Explicitly, d1 = p1^(n1-k1) * p2^(n2-k2) * ... * pi^0 * ... * pl^(nl-kl) and d2 = pi^(ki-xi)
+        Note that d1 is a multiple of powers of all p except pi, and d2 is a power of pi
+        a^f' == a^o == 1 (mod m) ==> a^(h * d1) == a^(h * d2) == 1 (mod m) ==> (a^h)^d1 == (a^h)^d2 == 1 (mod m)
+        Let b = a^h, meaning that b^d1 == b^d2 == 1 (mod m)
+        gcf(d1, d2) = 1 ==> there are ints c1, c2 such that c1*d1 + c2*d2 = 1
+            Shit, I haven't proven that here yet. Give me a second
+            It suffices to show that if gcf(x, y) = 1, cx == 1 (mod y)
+                Where x >= 2, y >= 2
+                    Let's show that d1 >= 2 and d2 >= 2
+                    If d2 < 2, d2 = 1 ==> h = o/d2 = o ==> xi = ki, a contradiction
+                    Otherwise, If d1 < 2, d1 = 1 ==> f' = h
+                        Recall that h = p1^k1 * p2^k2 * ... * pi^xi * ... * pl^kl
+                        and that o = p1^k1 * p2^k2 * ... * pi^ki * ... * pl^kl
+                        a^f' = a^h == 1 (mod m) ==> ki not minimal, a contradiction
+            Assume for contradiction that c1x == c2x (mod y) but c1 !== c2 (mod y)
+                ==> c1x - c2x == 0 (mod y) ==> x(c1 - c2) == 0 (mod y)
+                If x == 0 (mod y), gcf(x, y) = y != 1, a contradiction
+                Otherwise, c1 - c2 == 0 (mod y) ==> c1 == c2 (mod y), a contradiction
+            Thus, if c1 !== c2 (mod y), c1x !== c2x (mod y)
+            Thus, cx mod y has unique values from c = 0 to y-1
+            Anything mod y has y possible values, and c does too
+            Thus, each possible value of cx mod y is mapped to a unique value of c modulo y
+            cx mod y = 1 is mapped to some value c from 0 to y-1
+        Thus, b^(c1*d1 + c2*d2) = b^1 = b = (b^d1)^c1 * (b^d2)^c2 == 1^c1 * 1^c2 == 1 (mod m)
+        b = a^h == 1 (mod m) ==> ki not minimal, a contradiction
+        Note that c1 or c2 can be negative. Working with negative powers in modular arithmetic seems a bit sketchy
+            But it essentially works because b has a modular multiplicative inverse since gcf(b, m) = 1
+
 Explanations for isCyclic(n, base)
     Observe what happens when we divide 1 by 7
       --------------------------------
@@ -235,15 +274,6 @@ Explanations for isCyclic(n, base)
         Thus, order(b, n) = n-1
     (<==) order(b, n) = n-1 ==> 1/n base b generates a cyclic number
         Assume for contradiction that there is x and y such that 0 <= x < y <= n-2 and b^x == b^y (mod n)
-            Since there is an int k such that b^k == 1 (mod n) (namely order(b,n)), there is a b^(-1)
-                Where b^(-1), the modular multiplicative inverse, is a number such that b * b^(-1) == 1 (mod n)
-                And one possible value of b^(-1) is b^(k-1) since b * b^(k-1) = b^k == 1 (mod n)
-            (b^x == b^y) * (b^(-1))^x (mod n)
-                b^x * (b^(-1))^x == b^(y-x) * b^x * (b^(-1))^x (mod n)
-                b^x * (b^(-1))^x = (b * b^(-1))^x == 1 (mod n)
-            Thus, 1 == b^(y-x) (mod n)
-                y > x ==> y-x > 0
-                x >= 0 ==> -x <= 0 ==> y-x <= y <= n-2
             Thus, there is an int k = y-x such that 0 < k <= n-2 < n-1 = order(b,n) and b^k == 1 (mod n)
             Which contradicts how order(b, n) = n-1 is the smallest positive int z such that b^z == 1 (mod n)
         Thus, b^i mod n is unique for all i from 0 to n-2
@@ -259,7 +289,7 @@ Explanations for modifiedOrder(a, m)
         We also know that gcf(a, m) != 1 ==> a^totient(m) == 1 (mod m)
     As shown earlier, we only need to check the factors of m-1 to find the multiplicative order
     Here though, we're not interested in the smallest int x such that a^x == 1 (mod m) but if there is an x < m-1
-    Checking every factor is a bit wasteful since we know a^(kx) !== 1 (mod m) guarantees that a^x == 1 (mod m)
+    Checking every factor is a bit wasteful since we know a^(kx) !== 1 (mod m) guarantees that a^x !== 1 (mod m)
         Since, by the contrapositive, if a^x == 1 (mod m), a^(kx) = (a^x)^k == 1^k == 1 (mod m)
     Intuitively, we then only need to check the factors that are close to but not exactly m-1
         We don't check m-1 since we already know a^totient(m) = a^(m-1) == 1 (mod m)
