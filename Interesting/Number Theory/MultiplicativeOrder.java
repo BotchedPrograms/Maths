@@ -1,6 +1,7 @@
 // Note that when m is used as a parameter, the method has to do with something modulo m
 // Mathematical explanations and other stuff at the bottom
 
+import java.util.Arrays;
 import java.util.Map;
 
 public class MultiplicativeOrder {
@@ -50,6 +51,7 @@ public class MultiplicativeOrder {
 
     // Returns true iff a is a primitive root mod m, that is if order(a, m) == totient(m)
         // That's just a definition of a primitive root
+    // A.k.a. a generator, since if a is a generator, a^k generates all numbers coprime to m for k = 0 to totient(m)
     private static boolean primitiveRoot(long a, long m) {
         if (LCMandGCF.gcf(a, m) != 1) {
             return false;
@@ -152,7 +154,7 @@ Why only need to check factors of lambda for multiplicative orders
     Thus, there is a positive int h < x such that a^h == 1 (mod m)
     Thus, x is not the multiplicative order
 
-Explanations for CheckFactor
+Explanations for checkFactor
     In particular, how the way we avoid redundantly recursing the function on f
     Let f = p1^n1 * p2^n2 * ... * pl^nl = the current value of factor. a^f == 1 (mod m) holds
     Let o = p1^k1 * p2^k2 * ... * pl^kl = order(a, m). Note that kj is minimal and <= nj for all j
@@ -169,24 +171,8 @@ Explanations for CheckFactor
         a^f' == a^o == 1 (mod m) ==> a^(h * d1) == a^(h * d2) == 1 (mod m) ==> (a^h)^d1 == (a^h)^d2 == 1 (mod m)
         Let b = a^h, meaning that b^d1 == b^d2 == 1 (mod m)
         gcf(d1, d2) = 1 ==> there are ints c1, c2 such that c1*d1 + c2*d2 = 1
-            Shit, I haven't proven that here yet. Give me a second
-            It suffices to show that if gcf(x, y) = 1, cx == 1 (mod y)
-                Where x >= 2, y >= 2
-                    Let's show that d1 >= 2 and d2 >= 2
-                    If d2 < 2, d2 = 1 ==> h = o/d2 = o ==> xi = ki, a contradiction
-                    Otherwise, If d1 < 2, d1 = 1 ==> f' = h
-                        Recall that h = p1^k1 * p2^k2 * ... * pi^xi * ... * pl^kl
-                        and that o = p1^k1 * p2^k2 * ... * pi^ki * ... * pl^kl
-                        a^f' = a^h == 1 (mod m) ==> ki not minimal, a contradiction
-            Assume for contradiction that c1x == c2x (mod y) but c1 !== c2 (mod y)
-                ==> c1x - c2x == 0 (mod y) ==> x(c1 - c2) == 0 (mod y)
-                If x == 0 (mod y), gcf(x, y) = y != 1, a contradiction
-                Otherwise, c1 - c2 == 0 (mod y) ==> c1 == c2 (mod y), a contradiction
-            Thus, if c1 !== c2 (mod y), c1x !== c2x (mod y)
-            Thus, cx mod y has unique values from c = 0 to y-1
-            Anything mod y has y possible values, and c does too
-            Thus, each possible value of cx mod y is mapped to a unique value of c modulo y
-            cx mod y = 1 is mapped to some value c from 0 to y-1
+            This follows from the Extended Euclidean Algorithm, which I don't feel like proving, see here
+                https://brilliant.org/wiki/extended-euclidean-algorithm/
         Thus, b^(c1*d1 + c2*d2) = b^1 = b = (b^d1)^c1 * (b^d2)^c2 == 1^c1 * 1^c2 == 1 (mod m)
         b = a^h == 1 (mod m) ==> ki not minimal, a contradiction
         Note that c1 or c2 can be negative. Working with negative powers in modular arithmetic seems a bit sketchy
